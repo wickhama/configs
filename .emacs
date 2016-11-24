@@ -20,6 +20,9 @@
 ;;replace highlighted text
 (delete-selection-mode 1)
 
+;;no bell, flash instead
+(setq visible-bell t)
+
 ;;copy out of emacs
 (setq x-select-enable-clipboard t)
 
