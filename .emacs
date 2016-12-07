@@ -43,7 +43,8 @@
 
 ;;flyspell mode in all text modes
 (add-hook 'text-mode-hook '(lambda ()
-			     (flyspell-mode)))
+			     (flyspell-mode)
+			     (company-mode)))
 
 ;;C-c g to bring up magit status
 (global-set-key (kbd "C-c g") 'magit-status)
@@ -86,8 +87,6 @@
 ;------------------- ORG MODE CONFIG --------------------
 ;company mode + flyspell in org mode
 (add-hook 'org-mode-hook '(lambda ()
-			     (flyspell-mode)
-			     (company-mode)
 			     (local-set-key (kbd "C-c m") 'company-math-symbols-unicode)))
 
 
@@ -95,4 +94,11 @@
 ;;flyspell correct word on f12
 (add-hook 'flyspell-mode-hook '(lambda ()
 				 (local-set-key (kbd "<f12>") 'ispell-word)))
+
+
+;------------------- LATEX MODE CONFIG --------------------
+(add-hook 'LaTeX-mode-hook '(lambda ()
+			      (local-set-key (kbd "C-c b") 'latex-insert-block)
+			      (local-set-key (kbd "C-c m") 'company-math-symbols-latex)))
+
 
