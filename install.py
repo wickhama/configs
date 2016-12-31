@@ -10,10 +10,13 @@ def handle_config(line):
     if line[0] == '#':
         return
     line = line.split()
+    target = line[0]
+    destination = line[1]
+    #ask the user if they would like to use the position provided in the targets file or a custom location
     if line[2] == 'o':
-        link(line[0], line[1])
+        link(target, destination)
     elif line[2] == 'c':
-        insert(line[0], line[1])
+        insert(target, destination)
 
 with open('targets') as f:
     for line in f:
