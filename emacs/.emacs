@@ -48,56 +48,17 @@
 ;;C-c g to bring up magit status
 (global-set-key (kbd "C-c g") 'magit-status)
 
-;;C-c a brings up org agenda
-(global-set-key (kbd "C-c a") 'org-agenda)
-
-
+;******************* IMPORT CONFIGS *******************
 ;------------------- EL-GET SETUP --------------------
-;add el-get
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-
-(unless (require 'el-get nil 'noerror)
-  (with-current-buffer
-      (url-retrieve-synchronously
-       "https://raw.githubusercontent.com/dimitri/el-get/master/el-get-install.el")
-    (goto-char (point-max))
-    (eval-print-last-sexp)))
-
-(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
-(el-get 'sync)
-
-
-;list all packages you want installed  
-(setq my-el-get-packages  
-      (append  
-       '(magit flycheck jedi company-mode flyspell company-math)))  
-
-;make sure all of the required packages are installed
-(el-get 'sync my-el-get-packages)  
-
-
+(load-file "~/.emacs.d/.emacs.elget")
 ;------------------- PYTHON MODE CONFIG --------------------
-;show line numbers in python files and set flycheck-mode
-(add-hook 'python-mode-hook '(lambda ()
-			       (linum-mode)
-			       (flycheck-mode)))
-
-
+(load-file "~/.emacs.d/.emacs.python")
 ;------------------- ORG MODE CONFIG --------------------
 (load-file "~/.emacs.d/.emacs.orgmode")
-
-
 ;------------------- FLYSPELL MODE CONFIG --------------------
-;;flyspell correct word on f12
-(add-hook 'flyspell-mode-hook '(lambda ()
-				 (local-set-key (kbd "<f12>") 'ispell-word)))
-
-
+(load-file "~/.emacs.d/.emacs.flyspell")
 ;------------------- LATEX MODE CONFIG --------------------
-(add-hook 'LaTeX-mode-hook '(lambda ()
-			      (local-set-key (kbd "C-c b") 'latex-insert-block)
-			      (local-set-key (kbd "C-c m") 'company-math-symbols-latex)))
-
+(load-file "~/.emacs.d/.emacs.latex")
 
 ;------------------- C++ MODE CONFIG --------------------
 ; Create Header Guards with f12

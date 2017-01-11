@@ -1,0 +1,4 @@
+;show line numbers in python files and set flycheck-mode
+(add-hook 'python-mode-hook '(lambda ()
+			       (linum-mode)
+			       (flycheck-mode)))

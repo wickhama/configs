@@ -1,6 +1,9 @@
 (load-file "~/.emacs.d/custom-agenda.el")
 (setq org-agenda-files custom-org-agenda-files)
 
-;company mode + flyspell in org mode
+;;company mode + flyspell in org mode
 (add-hook 'org-mode-hook '(lambda ()
 			     (local-set-key (kbd "C-c m") 'company-math-symbols-unicode)))
+
+;;C-c a brings up org agenda
+(global-set-key (kbd "C-c a") 'org-agenda)
