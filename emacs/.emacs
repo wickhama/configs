@@ -4,8 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes (quote (manoj-dark)))
- '(inhibit-startup-screen t)
- '(org-agenda-files (quote ("~/Documents/notes/notes.org" "~/Documents/notes/school/third_year"))))
+ '(inhibit-startup-screen t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -102,3 +101,37 @@
 			      (local-set-key (kbd "C-c m") 'company-math-symbols-latex)))
 
 
+;------------------- C++ MODE CONFIG --------------------
+; Create Header Guards with f12
+;(global-set-key [f12] 
+;		'(lambda () 
+;		   (interactive)
+;		   (if (buffer-file-name)
+;		       (let*
+;			   ((fName (upcase (file-name-nondirectory (file-name-sans-extension buffer-file-name))))
+;			    (ifDef (concat "#ifndef " fName "_H" "\n#define " fName "_H" "\n"))
+;			    (begin (point-marker))
+;			    )
+;			 (progn
+;					; If less then 5 characters are in the buffer, insert the class definition
+;			   (if (< (- (point-max) (point-min)) 5 )
+;			       (progn
+;				 (insert "\nclass " (capitalize fName) "{\npublic:\n\nprivate:\n\n};\n")
+;				 (goto-char (point-min))
+;				 (next-line-nomark 3)
+;				 (setq begin (point-marker))
+;				 )
+;			     )
+;			   
+;					;Insert the Header Guard
+;			   (goto-char (point-min))
+;			   (insert ifDef)
+;			   (goto-char (point-max))
+;			   (insert "\n#endif" " //" fName "_H")
+;			   (goto-char begin))
+;			 )
+;		     ;else
+;		     (message (concat "Buffer " (buffer-name) " must have a filename"))
+;		     )
+;		   )
+;		)
