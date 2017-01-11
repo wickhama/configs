@@ -6,7 +6,7 @@ emacs/.emacs           ~/.emacs                        o
 emacs/.emacs.elget     ~/.emacs.d/.emacs.elget         o
 emacs/.emacs.python    ~/.emacs.d/.emacs.python        o
 emacs/.emacs.orgmode   ~/.emacs.d/.emacs.orgmode       o
-emacs/.emacs.flyspell  ~/.emacs.d/.emacs.orgmode       o
-emacs/.emacs.latex     ~/.emacs.d/.emacs.orgmode       o
+emacs/.emacs.flyspell  ~/.emacs.d/.emacs.flyspell      o
+emacs/.emacs.latex     ~/.emacs.d/.emacs.latex         o
 .tmux.conf             ~/.tmux.conf                    o
 .zshrc                 ~/.zshrc                        o
