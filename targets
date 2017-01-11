@@ -2,6 +2,7 @@
 #format: config, destination, mode
 #where mode is either c (make sure the destination Contains the contents of the config) or o (Overwrite)
 00-keyboard.conf /etc/X11/xorg.conf.d/00-keyboard.conf o
-.emacs           ~/.emacs                              o
-.tmux.conf       ~/.tmux.conf                          o
-.zshrc           ~/.zshrc                              o
+emacs/.emacs           ~/.emacs                        o
+emacs/.emacs.orgmode   ~/.emacs.d/.emacs.orgmode       o
+.tmux.conf             ~/.tmux.conf                    o
+.zshrc                 ~/.zshrc                        o

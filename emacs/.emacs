@@ -84,9 +84,7 @@
 
 
 ;------------------- ORG MODE CONFIG --------------------
-;company mode + flyspell in org mode
-(add-hook 'org-mode-hook '(lambda ()
-			     (local-set-key (kbd "C-c m") 'company-math-symbols-unicode)))
+(load-file "~/.emacs.d/.emacs.orgmode")
 
 
 ;------------------- FLYSPELL MODE CONFIG --------------------
