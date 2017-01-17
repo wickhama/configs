@@ -1,5 +1,3 @@
-(define-key *root-map* (kbd "c") "exec alacritty")
-
 ;; launch Emacs
 (defcommand emacs () ()  ;! redefining emacs command
   "Start Emacs or switch to it, if it is already running."
@@ -7,11 +5,14 @@
 
 ;; lock screen (x or L or l?)
 (define-key *root-map* (kbd "L") "exec xtrlock")
+
 (define-key *root-map* (kbd "g") "exec google-chrome-stable")
+
+(define-key *root-map* (kbd "c") "exec alacritty")
 
 
 ;; other programs in the system tray
-(run-shell-command "trayer")
-(run-shell-command "nm-applet --sm-disable")  ; network manager
+;;(run-shell-command "trayer")
+;;(run-shell-command "nm-applet --sm-disable")  ; network manager
 ;;add volume management and power, also bluetooth, perhaps the gnoe-settings applet
 ;;add time
