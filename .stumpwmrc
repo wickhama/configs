@@ -1,3 +1,5 @@
+(define-key *root-map* (kbd "c") "exec alacritty")
+
 ;; launch Emacs
 (defcommand emacs () ()  ;! redefining emacs command
   "Start Emacs or switch to it, if it is already running."
@@ -5,7 +7,7 @@
 
 ;; lock screen (x or L or l?)
 (define-key *root-map* (kbd "L") "exec xtrlock")
-(define-key *root-map* (kbd "g") "google-chrome")
+(define-key *root-map* (kbd "g") "exec google-chrome-stable")
 
 
 ;; other programs in the system tray

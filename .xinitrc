@@ -1,1 +1,2 @@
-/usr/bin/awesome
+/usr/bin/stumpwm
+
