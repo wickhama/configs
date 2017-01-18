@@ -1,4 +1,8 @@
-(stumpwm:set-prefix-key (stumpwm:kbd "s-s"))
+(stumpwm:set-prefix-key (stumpwm:kbd "C-j"))
+ 	
+(setf stumpwm:*screen-mode-line-format*
+      (list "%w | "
+            '(:eval (stumpwm:run-shell-command "date +\"%D %H:%M\"" t))))
 
 ;; launch Emacs
 (defcommand emacs () ()  ;! redefining emacs command
