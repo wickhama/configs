@@ -1,20 +1,52 @@
+(stumpwm:set-prefix-key (stumpwm:kbd "s-s"))
+
 ;; launch Emacs
 (defcommand emacs () ()  ;! redefining emacs command
   "Start Emacs or switch to it, if it is already running."
   (run-or-raise "emacs" '(:class "Emacs")))
 
-(stumpwm:set-prefix-key (stumpwm:kbd "s-s"))
-
-;; lock screen (x or L or l?)
-(define-key *root-map* (kbd "L") "exec xtrlock")
-
 (define-key *root-map* (kbd "g") "exec google-chrome-stable")
 
-(define-key *root-map* (kbd "c") "exec alacritty")
+(defcommand alacritty () ()
+  (run-or-raise "alacritty" '(:class "Alacritty")))
+(define-key *root-map* (kbd "c") "alacritty")
 
+;; lock screen
+(defcommand system-lock () ()
+	    (run-shell-command "xtrlock"))
+(define-key *root-map* (kbd "L") "system-lock")
 
-;; other programs in the system tray
-;;(run-shell-command "trayer")
-;;(run-shell-command "nm-applet --sm-disable")  ; network manager
-;;add volume management and power, also bluetooth, perhaps the gnoe-settings applet
-;;add time
+;; sleep
+(defcommand system-sleep () ()
+	    (run-commands "system-lock")
+	    (run-shell-command "systemctl suspend"))
+(define-key *root-map* (kbd "XF86Sleep") "system-sleep")
+
+;;    (define-stumpwm-command "mymenu" ()
+;;      (labels ((pick (options)
+;;                 (let ((selection (stumpwm::select-from-menu (current-screen) options "")))
+;;                   (cond
+;;                     ((null selection)
+;;                      (throw 'stumpwm::error "Abort."))
+;;                     ((stringp (second selection))
+;;                      (second selection))
+;;                     (t
+;;                      (pick (cdr selection)))))))
+;;        (let ((choice (pick *app-menu*)))
+;;          (run-shell-command choice))))
+;;
+;;    (defparameter *app-menu* '(("INTERNET"
+;;                              ;; sub menu
+;;                        ("Firefox" "firefox")
+;;                        ("Skype" "skype"))
+;;                   ("FUN"
+;;                    ;; sub menu
+;;                        ("option 2" "xlogo")
+;;                        ("GnuChess" "xboard"))
+;;                       ("WORK"
+;;                    ;;submenu
+;;                    ("OpenOffice.org" "openoffice"))
+;;                   ("GRAPHICS"
+;;                    ;;submenu
+;;                    ("GIMP" "gimp"))
+;;                    ("K3B" "k3b")))
