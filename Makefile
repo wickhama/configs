@@ -23,7 +23,7 @@ yaourt: build_dir
 	makepkg -si; \
 	fi; 
 
-emacs:
+emacs: yaourt 
 	$(call install_if_missing emacs)
 	if [ ! -d ~/.emacs.d ]; then mkdir ~/.emacs.d; fi;
 	ln -f emacs/.emacs ~/.emacs
@@ -37,18 +37,19 @@ emacs:
 tmux:
 	$(call install_if_missing tmux)
 	ln -f .tmux.conf ~/.tmux.conf
-zsh:
+zsh: yaourt 
 	$(call install_if_missing zsh)
 	$(call install_if_missing powerline)
-	chsh -s $(which zsh)
 	ln -f zsh/.zshrc ~/.zshrc
-ssh:
+ssh: yaourt 
 	$(call install_if_missing openssh)
 
-base: emacs tmux zsh ssh alacritty
+google-chrome: yaourt
+	$(call install_if_missing google-chrome)
+
+base: emacs tmux zsh ssh alacritty google-chrome
 	if [ ! -d ~/Downloads ]; then mkdir ~/Downloads; fi;
 	if [ ! -d ~/Documents ]; then mkdir ~/Documents; fi;
-	$(call install_if_missing google-chrome)
 
 X: yaourt X/.xinitrc
 	$(call install_if_missing xorg-server)
@@ -62,7 +63,7 @@ rustup:
 	curl https://sh.rustup.rs -sSf | sh; \
 	fi
 
-alacritty: X rustup
+alacritty: X rustup yaourt 
 	if ! hash alacritty 2>/dev/null; \
 	then \
 	source ~/.cargo/env; \
@@ -70,12 +71,12 @@ alacritty: X rustup
 	yaourt --needed -Sy alacritty-git; \
 	fi;
 
-pulseaudio: X
+pulseaudio: X yaourt 
 	$(call install_if_missing pulseaudio)
 	$(call install_if_missing pavucontrol)
 
-stumpwm: X zsh pulseaudio alacritty 
+stumpwm: X zsh pulseaudio alacritty yaourt google-chrome
+	$(call install_if_missing stumwm-git)
 	ln -f zsh/.zprofile ~/.zprofile
 	ln -f X/.xinitrc ~/.xinitrc
-	$(call install_if_missing stumwm-git)
-
+	ln -f .stumpwmrc ~/.stumpwmrc
