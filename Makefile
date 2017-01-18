@@ -75,7 +75,8 @@ pulseaudio: X
 	$(call install_if_missing pavucontrol)
 
 stumpwm: X zsh pulseaudio alacritty 
+	$(call install_if_missing stumwm-git)
 	ln -f zsh/.zprofile ~/.zprofile
 	ln -f X/.xinitrc ~/.xinitrc
-	$(call install_if_missing stumwm-git)
+	ln -f .stumpwmrc ~/.stumpwmrc
 
