@@ -32,7 +32,7 @@ emacs: yaourt
 	ln -f emacs/.emacs.latex ~/.emacs.d/.emacs.latex
 	ln -f emacs/.emacs.orgmode ~/.emacs.d/.emacs.orgmode
 	ln -f emacs/.emacs.python ~/.emacs.d/.emacs.python
-	if [ ! -f ~/.emacs.d/custom-agenda.el ]; then echo "(defvar custom-org-agenda-files \"\")" > ~/.emacs.d/custom-agenda.el; fi;
+	if [ ! -f ~/.emacs.d/custom-agenda.el ]; then echo "(defvar custom-org-agenda-files '(\"\"))" > ~/.emacs.d/custom-agenda.el; fi;
 
 tmux:
 	$(call install_if_missing tmux)

@@ -1,4 +1,4 @@
-(stumpwm:set-prefix-key (stumpwm:kbd "s-s"))
+(stumpwm:set-prefix-key (stumpwm:kbd "C-j"))
 
 ;; launch Emacs
 (defcommand emacs () ()  ;! redefining emacs command
