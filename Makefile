@@ -9,7 +9,7 @@ all:
 
 init_system: base emacs tmux zsh ssh stumpwm
 
-install_configs: emacs_conf tmux_conf zsh_conf X_conf
+install_configs: emacs_conf tmux_conf zsh_conf X_conf stumpwm_conf
 
 build_dir: ~/build
 	if [ ! -d ~/build ]; then mkdir ~/build; fi;
@@ -99,8 +99,11 @@ pulseaudio: X_pkg yaourt
 	$(call install_if_missing pulseaudio)
 	$(call install_if_missing pavucontrol)
 
-stumpwm: X zsh pulseaudio alacritty yaourt google-chrome
+stumpwm_pkg: X zsh pulseaudio alacritty yaourt google-chrome
 	$(call install_if_missing stumwm-git)
+
+stumpwm_conf: 
 	ln -f zsh/.zprofile ~/.zprofile
 	ln -f X/.xinitrc ~/.xinitrc
 	ln -f .stumpwmrc ~/.stumpwmrc
+stumpwm: stumpwm_pkg stumpwm_conf
