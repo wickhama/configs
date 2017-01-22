@@ -59,7 +59,8 @@
 (load-file "~/.emacs.d/.emacs.flyspell")
 ;------------------- LATEX MODE CONFIG --------------------
 (load-file "~/.emacs.d/.emacs.latex")
-
+(setq inferior-lisp-program "sbcl")
+(load (expand-file-name "~/quicklisp/slime-helper.el"))
 ;------------------- C++ MODE CONFIG --------------------
 ; Create Header Guards with f12
 ;(global-set-key [f12] 

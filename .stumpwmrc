@@ -1,15 +1,36 @@
+(in-package :stumpwm)
+(require :swank)
+(swank-loader:init)
+(swank:create-server :port 4004
+                     :style swank:*communication-style*
+                     :dont-close t)
+
 (stumpwm:set-prefix-key (stumpwm:kbd "C-j"))
- 	
-(setf stumpwm:*screen-mode-line-format*
-      (list "%w | "
-            '(:eval (stumpwm:run-shell-command "date +\"%D %H:%M\"" t))))
+
+(defun get_battery ()
+  (run-shell-command "upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -Po '(?<=percentage:\\s{10})[0-9]+%'" t))
+
+(defun get_time ()
+  (run-shell-command "date +'%D %H:%M'" t))
+
+(setf *screen-mode-line-format*
+      (list '(:eval (get_battery)) '(:eval (get_time))))
+;;(setf *screen-mode-line-format*
+;;      (list '(:eval (run-shell-command "date '+%R, %F %a'|tr -d [:cntrl:]" t)) " | %t | %c| %l | [^B%n^b] %W"))
+
+
+;;(setf stumpwm:*screen-mode-line-format*
+;;      (list "%w | "
+;;            (get_battery)))
 
 ;; launch Emacs
 (defcommand emacs () ()  ;! redefining emacs command
   "Start Emacs or switch to it, if it is already running."
   (run-or-raise "emacs" '(:class "Emacs")))
 
-(define-key *root-map* (kbd "g") "exec google-chrome-stable")
+(defcommand chrome () ()
+  (run-or-raise "google-chrome-stable" '(:instance "google-chrome-stable"))) ;doesn't work, why?
+(define-key *root-map* (kbd "g") "chrome")
 
 (defcommand alacritty () ()
   (run-or-raise "alacritty" '(:class "Alacritty")))
