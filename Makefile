@@ -1,3 +1,4 @@
+configs_dir = ${PWD}
 install_if_missing = \
 if ! hash $(1) 2>/dev/null; \
 then \
@@ -5,7 +6,7 @@ yaourt --needed -Sy $(1); \
 fi;
 
 all: 
-	@echo "use 'init_system' to install packages and configs (requires you to be on arch)\nor 'install_configs' to install only configs"
+	@printf "use 'init_system' to install packages and configs (requires you to be on arch)\nor 'install_configs' to install only configs"
 
 init_system: base emacs tmux zsh ssh stumpwm
 
@@ -30,15 +31,16 @@ yaourt: build_dir
 
 emacs_pkg: yaourt
 	$(call install_if_missing emacs)
+	if [ ! -d ~/.emacs.d/auto-save ]; then mkdir ~/.emacs.d/auto-save; fi;
 
-emacs_conf: 
+emacs_conf: emacs/.emacs emacs/.emacs.elget emacs/.emacs.flyspell emacs/.emacs.latex emacs/.emacs.orgmode emacs/.emacs.python ~/.emacs.d ~/.emacs.d/custom-agenda.el
 	if [ ! -d ~/.emacs.d ]; then mkdir ~/.emacs.d; fi;
-	ln -f emacs/.emacs ~/.emacs
-	ln -f emacs/.emacs.elget ~/.emacs.d/.emacs.elget
-	ln -f emacs/.emacs.flyspell ~/.emacs.d/.emacs.flyspell
-	ln -f emacs/.emacs.latex ~/.emacs.d/.emacs.latex
-	ln -f emacs/.emacs.orgmode ~/.emacs.d/.emacs.orgmode
-	ln -f emacs/.emacs.python ~/.emacs.d/.emacs.python
+	ln -f $(configs_dir)/emacs/.emacs ~/.emacs
+	ln -f $(configs_dir)/emacs/.emacs.elget ~/.emacs.d/.emacs.elget
+	ln -f $(configs_dir)/emacs/.emacs.flyspell ~/.emacs.d/.emacs.flyspell
+	ln -f $(configs_dir)/emacs/.emacs.latex ~/.emacs.d/.emacs.latex
+	ln -f $(configs_dir)/emacs/.emacs.orgmode ~/.emacs.d/.emacs.orgmode
+	ln -f $(configs_dir)/emacs/.emacs.python ~/.emacs.d/.emacs.python
 	if [ ! -f ~/.emacs.d/custom-agenda.el ]; then echo "(defvar custom-org-agenda-files '(\"\"))" > ~/.emacs.d/custom-agenda.el; fi;
 
 emacs: emacs_pkg emacs_conf
@@ -46,8 +48,8 @@ emacs: emacs_pkg emacs_conf
 tmux_pkg: yaourt
 	$(call install_if_missing tmux)
 
-tmux_conf:
-	ln -f .tmux.conf ~/.tmux.conf
+tmux_conf: .tmux.conf
+	ln -f $(configs_dir)/.tmux.conf ~/.tmux.conf
 
 tmux: tmux_pkg tmux_conf
 
@@ -56,7 +58,7 @@ zsh_pkg: yaourt
 	$(call install_if_missing powerline)
 
 zsh_conf:
-	ln -f zsh/.zshrc ~/.zshrc
+	ln -f $(configs_dir)/zsh/.zshrc ~/.zshrc
 
 zsh: zsh_pkg zsh_conf
 
@@ -78,7 +80,7 @@ X_pkg: yaourt
 	$(call install_if_missing xtrlock)
 
 X_conf: X/00-keyboard.conf
-	ln -f X/00-keyboard.conf /etc/X11/xorg.conf.d/00-keyboard.conf
+	sudo ln -f $(configs_dir)/X/00-keyboard.conf /etc/X11/xorg.conf.d/00-keyboard.conf
 
 X: X_pkg X_conf
 
@@ -102,8 +104,8 @@ pulseaudio: X_pkg yaourt
 stumpwm_pkg: X zsh pulseaudio alacritty yaourt google-chrome
 	$(call install_if_missing stumwm-git)
 
-stumpwm_conf: 
-	ln -f zsh/.zprofile ~/.zprofile
-	ln -f X/.xinitrc ~/.xinitrc
-	ln -f .stumpwmrc ~/.stumpwmrc
+stumpwm_conf: X/.xinitrc zsh/.zprofile .stumpwmrc
+	ln -f $(configs_dir)/zsh/.zprofile ~/.zprofile
+	ln -f $(configs_dir)/X/.xinitrc ~/.xinitrc
+	ln -f $(configs_dir)/.stumpwmrc ~/.stumpwmrc
 stumpwm: stumpwm_pkg stumpwm_conf
