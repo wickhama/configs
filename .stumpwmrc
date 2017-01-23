@@ -13,8 +13,14 @@
 (defun get_time ()
   (run-shell-command "date +'%D %H:%M' | tr -d '\\n'" t))
 
+(defun get_network ()
+  (let ((nwstr (run-shell-command "nmcli | grep -Po '(?<=connected to ).+' | tr -d '\\n'" t)))
+    (if (string= "" nwstr)
+	"Not Connected"
+	nwstr)))
+
 (setf *screen-mode-line-format*
-      (list '(:eval (get_battery)) " | " '(:eval (get_time)) " | %w"))
+      (list '(:eval (get_battery)) " | " '(:eval (get_time)) " | " '(:eval (get_network)) " | %w"))
 ;;(setf *screen-mode-line-format*
 ;;      (list '(:eval (run-shell-command "date '+%R, %F %a'|tr -d [:cntrl:]" t)) " | %t | %c| %l | [^B%n^b] %W"))
 
