@@ -1,20 +1,20 @@
 (in-package :stumpwm)
-(require :swank)
-(swank-loader:init)
-(swank:create-server :port 4004
-                     :style swank:*communication-style*
-                     :dont-close t)
+;(require :swank)
+;(swank-loader:init)
+;(swank:create-server :port 4004
+;                     :style swank:*communication-style*
+;                     :dont-close t)
 
 (stumpwm:set-prefix-key (stumpwm:kbd "C-j"))
 
 (defun get_battery ()
-  (run-shell-command "upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -Po '(?<=percentage:\\s{10})[0-9]+%'" t))
+  (run-shell-command "upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -Po '(?<=percentage:\\s{10})[0-9]+%' | tr -d '\\n'" t))
 
 (defun get_time ()
-  (run-shell-command "date +'%D %H:%M'" t))
+  (run-shell-command "date +'%D %H:%M' | tr -d '\\n'" t))
 
 (setf *screen-mode-line-format*
-      (list '(:eval (get_battery)) '(:eval (get_time))))
+      (list '(:eval (get_battery)) " | " '(:eval (get_time)) " | %w"))
 ;;(setf *screen-mode-line-format*
 ;;      (list '(:eval (run-shell-command "date '+%R, %F %a'|tr -d [:cntrl:]" t)) " | %t | %c| %l | [^B%n^b] %W"))
 
