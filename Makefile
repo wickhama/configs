@@ -12,7 +12,7 @@ init_system: base emacs tmux zsh ssh stumpwm
 
 install_configs: emacs_conf tmux_conf zsh_conf X_conf stumpwm_conf
 
-build_dir: ~/build
+build_dir: 
 	if [ ! -d ~/build ]; then mkdir ~/build; fi;
 	if [ ! -d ~/build/AUR ]; then mkdir ~/build/AUR; fi;
 
