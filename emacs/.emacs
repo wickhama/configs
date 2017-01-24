@@ -55,8 +55,10 @@
 ;;C-c g to bring up magit status
 (global-set-key (kbd "C-c g") 'magit-status)
 
+(setq backup-directory-alist
+                `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
-          `((".*" ,(concat user-emacs-directory "auto-save/") t))) 
+          `((".*" ,temporary-file-directory t))) 
 
 ;******************* IMPORT CONFIGS *******************
 ;------------------- EL-GET SETUP --------------------
