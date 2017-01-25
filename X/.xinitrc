@@ -1,1 +1,1 @@
-/usr/bin/stumpwm
+exec sbcl --load ~/startstump
