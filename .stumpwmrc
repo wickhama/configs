@@ -2,6 +2,8 @@
 
 (stumpwm:set-prefix-key (stumpwm:kbd "C-j"))
 
+(setf *mouse-focus-policy* :click)
+
 (defun get_battery ()
   (run-shell-command "upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -Po '(?<=percentage:\\s{10})[0-9]+%' | tr -d '\\n'" t))
 
