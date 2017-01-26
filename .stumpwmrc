@@ -1,5 +1,8 @@
 (in-package :stumpwm)
 
+(mode-line)
+(run-shell-command "redshift")
+
 (stumpwm:set-prefix-key (stumpwm:kbd "C-j"))
 
 (setf *mouse-focus-policy* :click)
@@ -11,7 +14,7 @@
   (run-shell-command "date +'%D %H:%M' | tr -d '\\n'" t))
 
 (defun get_network ()
-  (let ((nwstr (run-shell-command "nmcli | grep -Po '(?<=connected to ).+' | tr -d '\\n'" t)))
+  (let ((nwstr (run-shell-command "nmcli | grep -Po '(?!docker)(?<=connected to ).+' | tr -d '\\n'" t)))
     (if (string= "" nwstr)
 	"Not Connected"
 	nwstr)))
