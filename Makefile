@@ -107,4 +107,5 @@ stumpwm_conf: X/.xinitrc zsh/.zprofile .stumpwmrc
 	ln -fs $(configs_dir)/zsh/.zprofile ~/.zprofile
 	ln -fs $(configs_dir)/X/.xinitrc ~/.xinitrc
 	ln -fs $(configs_dir)/.stumpwmrc ~/.stumpwmrc
+
 stumpwm: stumpwm_pkg stumpwm_conf
