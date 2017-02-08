@@ -6,8 +6,6 @@ alias la='ls -la'
 
 alias pi-crate='docker run -it --rm -v $(pwd):/source dlecan/rust-crosscompiler-armv6:stable'
 
-alias mirror-site='wget -mpck --user-agent="" -e robots=off --wait 1'
-
 EDITOR=emacs
 #when emacs is started from the terminal, keep it there
 alias temacs='emacs -nw'
