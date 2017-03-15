@@ -15,7 +15,7 @@
 ;list all packages you want installed  
 (setq my-el-get-packages  
       (append  
-       '(magit flycheck jedi company-mode flyspell company-math auctex)))  
+       '(flycheck jedi company-mode flyspell company-math auctex)))  
 
 ;make sure all of the required packages are installed
 (el-get 'sync my-el-get-packages)  
