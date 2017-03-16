@@ -2,7 +2,7 @@ configs_dir = ${PWD}
 install_if_missing = \
 if ! hash $(1) 2>/dev/null; \
 then \
-yaourt --needed -Sy $(1); \
+yaourt --needed --noconfirm -Sy $(1); \
 fi;
 
 all: 
@@ -30,9 +30,9 @@ yaourt: build_dir
 	fi; 
 
 emacs_pkg: yaourt
-	$(call install_if_missing emacs)
+	$(call install_if_missing, emacs)
 
-emacs_conf: emacs/.emacs emacs/.emacs.elget emacs/.emacs.flyspell emacs/.emacs.latex emacs/.emacs.orgmode emacs/.emacs.python ~/.emacs.d ~/.emacs.d/custom-agenda.el
+emacs_conf: 
 	if [ ! -d ~/.emacs.d ]; then mkdir ~/.emacs.d; fi;
 	ln -fs $(configs_dir)/emacs/.emacs ~/.emacs
 	ln -fs $(configs_dir)/emacs/.emacs.elget ~/.emacs.d/.emacs.elget
@@ -45,7 +45,7 @@ emacs_conf: emacs/.emacs emacs/.emacs.elget emacs/.emacs.flyspell emacs/.emacs.l
 emacs: emacs_pkg emacs_conf
 
 tmux_pkg: yaourt
-	$(call install_if_missing tmux)
+	$(call install_if_missing, tmux)
 
 tmux_conf: .tmux.conf
 	ln -fs $(configs_dir)/.tmux.conf ~/.tmux.conf
@@ -53,8 +53,8 @@ tmux_conf: .tmux.conf
 tmux: tmux_pkg tmux_conf
 
 zsh_pkg: yaourt 
-	$(call install_if_missing zsh)
-	$(call install_if_missing powerline)
+	$(call install_if_missing, zsh)
+	$(call install_if_missing, powerline)
 
 zsh_conf:
 	ln -fs $(configs_dir)/zsh/.zshrc ~/.zshrc
@@ -62,21 +62,21 @@ zsh_conf:
 zsh: zsh_pkg zsh_conf
 
 ssh: yaourt 
-	$(call install_if_missing openssh)
+	$(call install_if_missing, openssh)
 
 google-chrome: yaourt
-	$(call install_if_missing google-chrome)
+	$(call install_if_missing, google-chrome)
 
 base:
 	if [ ! -d ~/Downloads ]; then mkdir ~/Downloads; fi;
 	if [ ! -d ~/Documents ]; then mkdir ~/Documents; fi;
 
 X_pkg: yaourt
-	$(call install_if_missing xorg-server)
-	$(call install_if_missing xorg-xinit)
-	$(call install_if_missing xorg-xdpyinfo)
-	$(call install_if_missing xsel)
-	$(call install_if_missing xtrlock)
+	$(call install_if_missing, xorg-server)
+	$(call install_if_missing, xorg-xinit)
+	$(call install_if_missing, xorg-xdpyinfo)
+	$(call install_if_missing, xsel)
+	$(call install_if_missing, xtrlock)
 
 X_conf: X/00-keyboard.conf
 	sudo ln -fs $(configs_dir)/X/00-keyboard.conf /etc/X11/xorg.conf.d/00-keyboard.conf
@@ -97,11 +97,11 @@ alacritty: X_pkg rustup yaourt
 	fi;
 
 pulseaudio: X_pkg yaourt 
-	$(call install_if_missing pulseaudio)
-	$(call install_if_missing pavucontrol)
+	$(call install_if_missing, pulseaudio)
+	$(call install_if_missing, pavucontrol)
 
 stumpwm_pkg: X zsh pulseaudio alacritty yaourt google-chrome
-	$(call install_if_missing stumwm-git)
+	$(call install_if_missing, stumpwm-git)
 
 stumpwm_conf: X/.xinitrc zsh/.zprofile .stumpwmrc
 	ln -fs $(configs_dir)/zsh/.zprofile ~/.zprofile
@@ -109,3 +109,6 @@ stumpwm_conf: X/.xinitrc zsh/.zprofile .stumpwmrc
 	ln -fs $(configs_dir)/.stumpwmrc ~/.stumpwmrc
 
 stumpwm: stumpwm_pkg stumpwm_conf
+
+latex:
+	$(call install_if_missing, texlive-core)
