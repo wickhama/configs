@@ -8,7 +8,7 @@
 (setf *mouse-focus-policy* :click)
 
 (defun get_battery ()
-  (run-shell-command "upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -Po '(?<=percentage:\\s{10})[0-9]+%' | tr -d '\\n'" t))
+  (run-shell-command "upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep -Po '(?<=percentage:\\s{10})[0-9]+%' | tr -d '\\n'" t))
 
 (defun get_time ()
   (run-shell-command "date +'%D %H:%M' | tr -d '\\n'" t))
