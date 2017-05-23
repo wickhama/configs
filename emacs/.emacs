@@ -1,4 +1,3 @@
-
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
@@ -22,6 +21,7 @@
 
 
 ;------------------- MODIFY GLOBAL SETTINGS --------------------
+
 ;;get rid of toolbar
 (tool-bar-mode -1)
 (menu-bar-mode -1) 
@@ -52,13 +52,27 @@
 			     (flyspell-mode)
 			     (company-mode)))
 
-;;C-c g to bring up magit status
-(global-set-key (kbd "C-c g") 'magit-status)
-
 (setq backup-directory-alist
                 `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
           `((".*" ,temporary-file-directory t))) 
+
+
+(defun git-commit-push (msg)
+  "Commits the changes in the directory with the message and then pushes"
+  (interactive "Mcommit message: ")
+  (shell-command (concat "git commit . -m \"" msg "\""))
+  (shell-command "git push"))
+
+(defun git-pull ()
+  "Pulls from git, merges will need to be handled manually"
+  (interactive)
+  (shell-command "git pull"))
+
+;git push
+(global-set-key (kbd "C-c C-g p") 'git-commit-push)
+;git fetch
+(global-set-key (kbd "C-c C-g f") 'git-pull)
 
 ;******************* IMPORT CONFIGS *******************
 ;------------------- EL-GET SETUP --------------------
@@ -71,39 +85,16 @@
 (load-file "~/.emacs.d/.emacs.flyspell")
 ;------------------- LATEX MODE CONFIG --------------------
 (load-file "~/.emacs.d/.emacs.latex")
+
 (setq inferior-lisp-program "sbcl")
-;;(load (expand-file-name "~/quicklisp/slime-helper.el"))
-;------------------- C++ MODE CONFIG --------------------
-; Create Header Guards with f12
-;(global-set-key [f12] 
-;		'(lambda () 
-;		   (interactive)
-;		   (if (buffer-file-name)
-;		       (let*
-;			   ((fName (upcase (file-name-nondirectory (file-name-sans-extension buffer-file-name))))
-;			    (ifDef (concat "#ifndef " fName "_H" "\n#define " fName "_H" "\n"))
-;			    (begin (point-marker))
-;			    )
-;			 (progn
-;					; If less then 5 characters are in the buffer, insert the class definition
-;			   (if (< (- (point-max) (point-min)) 5 )
-;			       (progn
-;				 (insert "\nclass " (capitalize fName) "{\npublic:\n\nprivate:\n\n};\n")
-;				 (goto-char (point-min))
-;				 (next-line-nomark 3)
-;				 (setq begin (point-marker))
-;				 )
-;			     )
-;			   
-;					;Insert the Header Guard
-;			   (goto-char (point-min))
-;			   (insert ifDef)
-;			   (goto-char (point-max))
-;			   (insert "\n#endif" " //" fName "_H")
-;			   (goto-char begin))
-;			 )
-;		     ;else
-;		     (message (concat "Buffer " (buffer-name) " must have a filename"))
-;		     )
-;		   )
-;		)
+
+(evil-mode)
+(defalias 'evil-insert-state 'evil-emacs-state)
+(define-key evil-emacs-state-map [escape] `evil-normal-state)
+(fset 'evil-visual-update-x-selection 'ignore)
+
+(use-package darcula-theme
+  :ensure t
+  :config
+  ;; your preferred main font face here
+  (set-frame-font "Inconsolata-14"))
