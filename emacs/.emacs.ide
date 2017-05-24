@@ -1,0 +1,11 @@
+;;contains all of my custom code that adds ide-like functionality to emacs
+
+;;C-c C-SPC is used as the prefix for all ide commands
+;;I'd have prefered to go with C-c C-i but depending on the environment that could be indistinguishable from tab
+
+;;make speedbar show hidden files
+(setq speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")
+
+(general-define-key :prefix "C-c C-SPC"
+		    "t" `sr-speedbar-toggle;;show directory [t]ree
+)

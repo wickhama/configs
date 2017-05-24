@@ -15,7 +15,11 @@
 ;list all packages you want installed  
 (setq my-el-get-packages  
       (append  
-       '(flycheck company-mode flyspell company-math auctex evil use-package)))  
+       '(flycheck company-mode flyspell company-math auctex evil use-package sr-speedbar)))  
 
 ;make sure all of the required packages are installed
-(el-get 'sync my-el-get-packages)  
+(el-get 'sync my-el-get-packages)
+
+;;use melpa for packages that aren't in el-get
+(package-install 'general)
+(use-package "general")
