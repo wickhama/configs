@@ -15,7 +15,7 @@
 ;list all packages you want installed  
 (setq my-el-get-packages  
       (append  
-       '(flycheck jedi company-mode flyspell company-math auctex)))  
+       '(flycheck company-mode flyspell company-math auctex evil use-package)))  
 
 ;make sure all of the required packages are installed
 (el-get 'sync my-el-get-packages)  
