@@ -21,5 +21,20 @@
 (el-get 'sync my-el-get-packages)
 
 ;;use melpa for packages that aren't in el-get
-(package-install 'general)
-(use-package "general")
+;; MELPA setup and initial packages
+(require 'package)
+
+(add-to-list 'package-archives
+	     '("melpa" . "http://melpa.org/packages/") t)
+
+(unless package-archive-contents
+  (package-refresh-contents))
+
+(package-initialize)
+
+(defvar package-list
+  '(general))
+
+(dolist (p package-list)
+  (when (not (package-installed-p p))
+             (package-install p)))

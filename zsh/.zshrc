@@ -1,5 +1,6 @@
-source /usr/share/zsh/site-contrib/powerline.zsh
-zstyle ':completion:*' menu select
+#source /usr/share/zsh/site-contrib/powerline.zsh
+#zstyle ':completion:*' menu select
+export PS1="%d: "
 alias ls='ls --color=auto'
 alias ll='ls -l'
 alias la='ls -la'

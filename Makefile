@@ -40,6 +40,9 @@ emacs_conf:
 	ln -fs $(configs_dir)/emacs/.emacs.latex ~/.emacs.d/.emacs.latex
 	ln -fs $(configs_dir)/emacs/.emacs.orgmode ~/.emacs.d/.emacs.orgmode
 	ln -fs $(configs_dir)/emacs/.emacs.python ~/.emacs.d/.emacs.python
+	ln -fs $(configs_dir)/emacs/.emacs.ide ~/.emacs.d/.emacs.ide
+	ln -fs $(configs_dir)/emacs/.emacs.evil ~/.emacs.d/.emacs.evil
+	ln -fs $(configs_dir)/emacs/.emacs.misc ~/.emacs.d/.emacs.misc
 	if [ ! -f ~/.emacs.d/custom-agenda.el ]; then echo "(defvar custom-org-agenda-files '(\"\"))" > ~/.emacs.d/custom-agenda.el; fi;
 
 emacs: emacs_pkg emacs_conf
