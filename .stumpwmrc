@@ -2,6 +2,8 @@
 
 (mode-line)
 (run-shell-command "redshift")
+(run-shell-command "gnome-screensaver")
+(run-shell-command "emacs --daemon")
 
 (stumpwm:set-prefix-key (stumpwm:kbd "C-j"))
 
@@ -21,30 +23,23 @@
 
 (setf *screen-mode-line-format*
       (list '(:eval (get_battery)) " | " '(:eval (get_time)) " | " '(:eval (get_network)) " | %w"))
-;;(setf *screen-mode-line-format*
-;;      (list '(:eval (run-shell-command "date '+%R, %F %a'|tr -d [:cntrl:]" t)) " | %t | %c| %l | [^B%n^b] %W"))
-
-
-;;(setf stumpwm:*screen-mode-line-format*
-;;      (list "%w | "
-;;            (get_battery)))
 
 ;; launch Emacs
 (defcommand emacs () ()  ;! redefining emacs command
   "Start Emacs or switch to it, if it is already running."
-  (run-or-raise "emacs" '(:class "Emacs")))
+  (run-or-raise "emacsclient -c" '(:class "Emacs")))
 
 (defcommand chrome () ()
   (run-or-raise "google-chrome-stable" '(:instance "google-chrome-stable"))) ;doesn't work, why?
 (define-key *root-map* (kbd "g") "chrome")
 
 (defcommand alacritty () ()
-  (run-or-raise "alacritty" '(:class "Alacritty")))
+  (run-or-raise "alacritty -e tmux" '(:class "Alacritty")))
 (define-key *root-map* (kbd "c") "alacritty")
 
 ;; lock screen
 (defcommand system-lock () ()
-	    (run-shell-command "xtrlock"))
+	    (run-shell-command "gnome-screensaver-command -l"))
 (define-key *root-map* (kbd "L") "system-lock")
 
 ;; sleep
@@ -52,32 +47,3 @@
 	    (run-commands "system-lock")
 	    (run-shell-command "systemctl suspend"))
 (define-key *root-map* (kbd "XF86Sleep") "system-sleep")
-
-;;    (define-stumpwm-command "mymenu" ()
-;;      (labels ((pick (options)
-;;                 (let ((selection (stumpwm::select-from-menu (current-screen) options "")))
-;;                   (cond
-;;                     ((null selection)
-;;                      (throw 'stumpwm::error "Abort."))
-;;                     ((stringp (second selection))
-;;                      (second selection))
-;;                     (t
-;;                      (pick (cdr selection)))))))
-;;        (let ((choice (pick *app-menu*)))
-;;          (run-shell-command choice))))
-;;
-;;    (defparameter *app-menu* '(("INTERNET"
-;;                              ;; sub menu
-;;                        ("Firefox" "firefox")
-;;                        ("Skype" "skype"))
-;;                   ("FUN"
-;;                    ;; sub menu
-;;                        ("option 2" "xlogo")
-;;                        ("GnuChess" "xboard"))
-;;                       ("WORK"
-;;                    ;;submenu
-;;                    ("OpenOffice.org" "openoffice"))
-;;                   ("GRAPHICS"
-;;                    ;;submenu
-;;                    ("GIMP" "gimp"))
-;;                    ("K3B" "k3b")))

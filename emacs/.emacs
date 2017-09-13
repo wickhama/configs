@@ -11,7 +11,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes (quote (manoj-dark)))
  '(inhibit-startup-screen t)
- '(package-selected-packages (quote (darcula-theme general))))
+ '(package-selected-packages (quote (slime queue cider darcula-theme general))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -37,3 +37,5 @@
 (load-file "~/.emacs.d/.emacs.misc")
 ;-------------------- IDE CONFIGS --------------------
 (load-file "~/.emacs.d/.emacs.ide")
+;-------------------- LISP CONFIGS --------------------
+(load-file "~/.emacs.d/.emacs.lisp")

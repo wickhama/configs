@@ -1,5 +1,6 @@
-(load-file "~/.emacs.d/custom-agenda.el")
-(setq org-agenda-files custom-org-agenda-files)
+(setq org-agenda-files (split-string
+				 (shell-command-to-string "find ~/Documents -name \"*.org\"")
+				 "\n"))
 
 ;;company mode + flyspell in org mode
 (add-hook 'org-mode-hook '(lambda ()

@@ -43,7 +43,7 @@ emacs_conf:
 	ln -fs $(configs_dir)/emacs/.emacs.ide ~/.emacs.d/.emacs.ide
 	ln -fs $(configs_dir)/emacs/.emacs.evil ~/.emacs.d/.emacs.evil
 	ln -fs $(configs_dir)/emacs/.emacs.misc ~/.emacs.d/.emacs.misc
-	if [ ! -f ~/.emacs.d/custom-agenda.el ]; then echo "(defvar custom-org-agenda-files '(\"\"))" > ~/.emacs.d/custom-agenda.el; fi;
+	ln -fs $(configs_dir)/emacs/.emacs.lisp ~/.emacs.d/.emacs.lisp
 
 emacs: emacs_pkg emacs_conf
 
