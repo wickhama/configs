@@ -30,7 +30,7 @@
   (run-or-raise "emacsclient -c" '(:class "Emacs")))
 
 (defcommand chrome () ()
-  (run-or-raise "google-chrome-stable" '(:instance "google-chrome-stable"))) ;doesn't work, why?
+  (run-or-raise "google-chrome-stable" '(:class "Google-chrome"))) 
 (define-key *root-map* (kbd "g") "chrome")
 
 (defcommand alacritty () ()
