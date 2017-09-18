@@ -27,33 +27,26 @@
 (setf *screen-mode-line-format*
       (list '(:eval (get_battery)) " | " '(:eval (get_time)) " | " '(:eval (get_network)) " | %w"))
 
-;WIP
 (defmacro define-command-and-bind (name command key)
-  `(defcommand ,name () ()
-	      (print 7))
-  `(define-key *root-map* (kbd ,key) ,name)
-  )
+  (list 'progn (list 'defcommand name () ()
+	 command)
+	(list 'define-key '*root-map* (list 'kbd key) (list 'string (list 'quote name)))))
 
-;; launch Emacs
+(defun my-run-or-raise (command class-name)
+  (run-or-raise command (list :class class-name)))
+
 (defcommand emacs () ()  ;! redefining emacs command
   "Start Emacs or switch to it, if it is already running."
-  (run-or-raise "emacsclient -c" '(:class "Emacs")))
+  (my-run-or-raise "emacsclient -c" "Emacs"))
 
-(defcommand chrome () ()
-  (run-or-raise "google-chrome-stable" '(:class "Google-chrome"))) 
-(define-key *root-map* (kbd "g") "chrome")
+(define-command-and-bind chrome (my-run-or-raise "google-chrome-stable" "Google-chrome") "g")
 
-(defcommand alacritty () ()
-  (run-or-raise "alacritty -e tmux" '(:class "Alacritty")))
-(define-key *root-map* (kbd "c") "alacritty")
+(define-command-and-bind alacritty (my-run-or-raise "alacritty -e tmux" "Alacritty") "c")
 
-;; lock screen
-(defcommand system-lock () ()
-	    (run-shell-command "gnome-screensaver-command -l"))
-(define-key *root-map* (kbd "L") "system-lock")
+(define-command-and-bind system-lock (run-shell-command "gnome-screensaver-command -l") "L")
 
-;; sleep
-(defcommand system-sleep () ()
-	    (run-commands "system-lock")
-	    (run-shell-command "systemctl suspend"))
-(define-key *root-map* (kbd "XF86Sleep") "system-sleep")
+(define-command-and-bind system-sleep
+    (progn
+      (run-commands "system-lock")
+      (run-shell-command "systemctl suspend")) "XF86Sleep")
+
