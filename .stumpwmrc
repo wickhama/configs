@@ -1,9 +1,12 @@
 (in-package :stumpwm)
 
-(mode-line)
-(run-shell-command "redshift")
-(run-shell-command "gnome-screensaver")
-(run-shell-command "emacs --daemon")
+(defvar mode-line-is-on nil)
+(if (not mode-line-is-on) (mode-line))
+(defparameter mode-line-is-on t)
+
+(defvar startup-programs '("redshift" "gnome-screensaver" "emacs --daemon"))
+(map nil 'run-shell-command startup-programs)
+(defparameter startup-programs '()) ;;only start programs the first time
 
 (stumpwm:set-prefix-key (stumpwm:kbd "C-j"))
 
@@ -23,6 +26,13 @@
 
 (setf *screen-mode-line-format*
       (list '(:eval (get_battery)) " | " '(:eval (get_time)) " | " '(:eval (get_network)) " | %w"))
+
+;WIP
+(defmacro define-command-and-bind (name command key)
+  `(defcommand ,name () ()
+	      (print 7))
+  `(define-key *root-map* (kbd ,key) ,name)
+  )
 
 ;; launch Emacs
 (defcommand emacs () ()  ;! redefining emacs command
