@@ -57,6 +57,9 @@
 					(concatenate 'string "echo " (write-to-string new-brightness)
 						     " > /sys/class/backlight/intel_backlight/brightness")))
 
-(define-command-and-bind brightness-up (run-shell-command "xbacklight -inc 10" t) "XF86MonBrightnessUp" *top-map*)
-(define-command-and-bind brightness-down (run-shell-command "xbacklight -dec 10" t) "XF86MonBrightnessDown" *top-map*)
+(define-command-and-bind brightness-up (run-shell-command "xbacklight -inc 10") "XF86MonBrightnessUp" *top-map*)
+(define-command-and-bind brightness-down (run-shell-command "xbacklight -dec 10") "XF86MonBrightnessDown" *top-map*)
 
+(define-command-and-bind audio-mute (run-shell-command "amixer sset Master toggle") "XF86AudioMute" *top-map*)
+(define-command-and-bind audio-up (run-shell-command "amixer sset Master 5%+") "XF86AudioRaiseVolume" *top-map*)
+(define-command-and-bind audio-down (run-shell-command "amixer sset Master 5%-") "XF86AudioLowerVolume" *top-map*)
