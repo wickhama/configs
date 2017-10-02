@@ -28,12 +28,14 @@
       (list '(:eval (get_battery)) " | " '(:eval (get_time)) " | " '(:eval (get_network)) " | %w"))
 
 (defmacro define-command-and-bind (name command key &optional (key-map '*root-map*))
-  (list 'progn (list 'defcommand name () ()
-	 command)
-	(list 'define-key key-map (list 'kbd key) (list 'string (list 'quote name)))))
+  `(progn (defcommand ,name () ()
+	 ,command)
+	(define-key ,key-map (kbd ,key) (string (quote ,name)))))
 
 (defun my-run-or-raise (command class-name)
   (run-or-raise command (list :class class-name)))
+
+;;TODO function that takes a list of (program, class, key) tuples and makes them all raisable
 
 (defcommand emacs () ()  ;! redefining emacs command
   "Start Emacs or switch to it, if it is already running."
@@ -44,6 +46,10 @@
 (define-command-and-bind alacritty (my-run-or-raise "alacritty -e tmux" "Alacritty") "c")
 
 (define-command-and-bind system-lock (run-shell-command "gnome-screensaver-command -l") "L")
+
+(define-command-and-bind pavucontrol (my-run-or-raise "pavucontrol" "Pavucontrol") "P")
+
+(define-command-and-bind evince (my-run-or-raise "evince" "Evince") "E")
 
 (define-command-and-bind system-sleep
     (progn
