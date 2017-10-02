@@ -58,5 +58,5 @@
 						     " > /sys/class/backlight/intel_backlight/brightness")))
 
 (define-command-and-bind brightness-up (run-shell-command "xbacklight -inc 10" t) "XF86MonBrightnessUp" *top-map*)
-(define-command-and-bind brightness-down (run-shell-command "xbacklight -inc 10" t) "XF86MonBrightnessDown" *top-map*)
+(define-command-and-bind brightness-down (run-shell-command "xbacklight -dec 10" t) "XF86MonBrightnessDown" *top-map*)
 
