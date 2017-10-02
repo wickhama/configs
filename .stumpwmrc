@@ -27,10 +27,10 @@
 (setf *screen-mode-line-format*
       (list '(:eval (get_battery)) " | " '(:eval (get_time)) " | " '(:eval (get_network)) " | %w"))
 
-(defmacro define-command-and-bind (name command key)
+(defmacro define-command-and-bind (name command key &optional (key-map '*root-map*))
   (list 'progn (list 'defcommand name () ()
 	 command)
-	(list 'define-key '*root-map* (list 'kbd key) (list 'string (list 'quote name)))))
+	(list 'define-key key-map (list 'kbd key) (list 'string (list 'quote name)))))
 
 (defun my-run-or-raise (command class-name)
   (run-or-raise command (list :class class-name)))
@@ -48,5 +48,15 @@
 (define-command-and-bind system-sleep
     (progn
       (run-commands "system-lock")
-      (run-shell-command "systemctl suspend")) "XF86Sleep")
+      (run-shell-command "systemctl suspend")) "XF86Sleep" *top-map*)
+
+					; brightness at /sys/class/backlight/intel_backlight/brightness
+					; can just read/write it
+(defun read-brightness () (run-shell-command "cat /sys/class/backlight/intel_backlight/brightness" t))
+(defun set-brightness (new-brightness) (run-shell-command
+					(concatenate 'string "echo " (write-to-string new-brightness)
+						     " > /sys/class/backlight/intel_backlight/brightness")))
+
+(define-command-and-bind brightness-up (run-shell-command "xbacklight -inc 10" t) "XF86MonBrightnessUp" *top-map*)
+(define-command-and-bind brightness-down (run-shell-command "xbacklight -inc 10" t) "XF86MonBrightnessDown" *top-map*)
 
