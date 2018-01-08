@@ -16,7 +16,7 @@
   (run-shell-command "upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep -Po '(?<=percentage:\\s{10})[0-9]+%' | tr -d '\\n'" t))
 
 (defun get_time ()
-  (run-shell-command "date +'%D %H:%M' | tr -d '\\n'" t))
+  (run-shell-command "date +'%b %d %I:%M' | tr -d '\\n'" t))
 
 (defun get_network ()
   (let ((nwstr (run-shell-command "nmcli | grep -Po '(?!docker)(?<=connected to ).+' | tr -d '\\n'" t)))
@@ -25,7 +25,7 @@
 	nwstr)))
 
 (setf *screen-mode-line-format*
-      (list '(:eval (get_battery)) " | " '(:eval (get_time)) " | " '(:eval (get_network)) " | %w"))
+      `((:eval (get_battery)) " | " (:eval (get_time)) " | " (:eval (get_network)) " | %w"))
 
 (defmacro define-command-and-bind (name command key &optional (key-map '*root-map*))
   `(progn (defcommand ,name () ()
@@ -43,7 +43,7 @@
 
 (define-command-and-bind chrome (my-run-or-raise "google-chrome-stable" "Google-chrome") "g")
 
-(define-command-and-bind alacritty (my-run-or-raise "alacritty -e tmux" "Alacritty") "c")
+(define-command-and-bind alacritty (run-shell-command "emacsclient -c -e '(multi-term-next)'") "c")
 
 (define-command-and-bind system-lock (run-shell-command "gnome-screensaver-command -l") "L")
 

@@ -7,7 +7,15 @@ alias la='ls -la'
 
 alias pi-crate='docker run -it --rm -v $(pwd):/source dlecan/rust-crosscompiler-armv6:stable'
 
-EDITOR=emacs
+EDITOR="emacsclient -c"
+alias cemacs='emacsclient -c'
+#zsh needs to update emacs' default directory
+if [ -n "$INSIDE_EMACS" ]; then
+  chpwd() { print -P "\033AnSiTc %d" }
+  print -P "\033AnSiTu %n"
+  print -P "\033AnSiTc %d"
+fi
+
 #when emacs is started from the terminal, keep it there
 alias temacs='emacs -nw'
 
