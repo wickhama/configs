@@ -1,5 +1,0 @@
-(evil-mode)
-(defalias 'evil-insert-state 'evil-emacs-state)
-(define-key evil-emacs-state-map [escape] `evil-normal-state)
-(fset 'evil-visual-update-x-selection 'ignore)
-
