@@ -4,7 +4,7 @@
 (if (not mode-line-is-on) (mode-line))
 (defparameter mode-line-is-on t)
 
-(defvar startup-programs '("redshift" "gnome-screensaver" "emacs --daemon"))
+(defvar startup-programs '("redshift" "gnome-screensaver"))
 (map nil 'run-shell-command startup-programs)
 (defparameter startup-programs '()) ;;only start programs the first time
 
