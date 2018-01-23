@@ -1,17 +1,21 @@
+;set up
 (in-package :stumpwm)
+(stumpwm:set-prefix-key (stumpwm:kbd "C-j"))
+(setf *mouse-focus-policy* :click)
+
+;variables
+(defvar *run-or-raise-all-groups* nil)
 
 (defvar mode-line-is-on nil)
 (if (not mode-line-is-on) (mode-line))
 (defparameter mode-line-is-on t)
 
-(defvar startup-programs '("redshift" "gnome-screensaver"))
+;startup programs
+(defvar startup-programs '("redshift" "gnome-screensaver" "emacs --daemon"))
 (map nil 'run-shell-command startup-programs)
 (defparameter startup-programs '()) ;;only start programs the first time
 
-(stumpwm:set-prefix-key (stumpwm:kbd "C-j"))
-
-(setf *mouse-focus-policy* :click)
-
+; mode line
 (defun get_battery ()
   (run-shell-command "upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep -Po '(?<=percentage:\\s{10})[0-9]+%' | tr -d '\\n'" t))
 
@@ -27,21 +31,21 @@
 (setf *screen-mode-line-format*
       `((:eval (get_battery)) " | " (:eval (get_time)) " | " (:eval (get_network)) " | %w"))
 
+;utility functions
 (defmacro define-command-and-bind (name command key &optional (key-map '*root-map*))
   `(progn (defcommand ,name () ()
 	 ,command)
 	(define-key ,key-map (kbd ,key) (string (quote ,name)))))
 
 (defun my-run-or-raise (command class-name)
-  (run-or-raise command (list :class class-name)))
+  (run-or-raise command (list :class class-name) nil))
 
-;;TODO function that takes a list of (program, class, key) tuples and makes them all raisable
-
+;common programs
 (defcommand emacs () ()  ;! redefining emacs command
   "Start Emacs or switch to it, if it is already running."
   (my-run-or-raise "emacsclient -c" "Emacs"))
 
-(define-command-and-bind chrome (my-run-or-raise "google-chrome-stable" "Google-chrome") "g")
+(define-command-and-bind chrome (my-run-or-raise "google-chrome-stable" "Google-chrome") "G")
 
 (define-command-and-bind alacritty (run-shell-command "emacsclient -c -e '(multi-term-next)'") "c")
 
@@ -51,6 +55,9 @@
 
 (define-command-and-bind evince (my-run-or-raise "evince" "Evince") "E")
 
+(define-command-and-bind nmtui (my-run-or-raise "alacritty -e nmtui" "Nmtui") "C")
+
+;system keys
 (define-command-and-bind system-sleep
     (progn
       (run-commands "system-lock")
