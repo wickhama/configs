@@ -2,6 +2,7 @@
 (in-package :stumpwm)
 (stumpwm:set-prefix-key (stumpwm:kbd "C-j"))
 (setf *mouse-focus-policy* :click)
+(define-key *root-map* (kbd "G") *GROUPS-MAP*)
 
 ;variables
 (defvar *run-or-raise-all-groups* nil)
@@ -45,7 +46,7 @@
   "Start Emacs or switch to it, if it is already running."
   (my-run-or-raise "emacsclient -c" "Emacs"))
 
-(define-command-and-bind chrome (my-run-or-raise "google-chrome-stable" "Google-chrome") "G")
+(define-command-and-bind chrome (my-run-or-raise "google-chrome-stable" "Google-chrome") "g")
 
 (define-command-and-bind alacritty (run-shell-command "emacsclient -c -e '(multi-term-next)'") "c")
 
