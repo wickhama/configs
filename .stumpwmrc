@@ -3,6 +3,7 @@
 (stumpwm:set-prefix-key (stumpwm:kbd "C-j"))
 (setf *mouse-focus-policy* :click)
 (define-key *root-map* (kbd "G") *GROUPS-MAP*)
+(set-font "-*-terminus-medium-r-normal-*-16-*-*-*-*-*-iso10646-1");use a font that is included with X11 and isn't terrible
 
 ;variables
 (defvar *run-or-raise-all-groups* nil)
@@ -55,6 +56,8 @@
 (define-command-and-bind pavucontrol (my-run-or-raise "pavucontrol" "Pavucontrol") "P")
 
 (define-command-and-bind evince (my-run-or-raise "evince" "Evince") "E")
+
+(define-command-and-bind discord (my-run-or-raise "discord" "Discord") "D")
 
 (define-command-and-bind nmtui (my-run-or-raise "alacritty -e nmtui" "Nmtui") "C")
 
