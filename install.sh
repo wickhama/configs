@@ -12,10 +12,13 @@ install () {
     fi
 }
 
-#TODO install stumpwm via quicklisp
+. stumpwm/install_stump.sh
 
 install zsh
-chsh -s zsh
+if [ -z $(echo $SHELL | grep zsh) ]
+then
+    chsh -s zsh
+fi
 install emacs
 install google-chrome-stable
 
