@@ -1,0 +1,2 @@
+unsetopt beep
+bindkey -e
