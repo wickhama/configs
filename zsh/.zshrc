@@ -1,5 +1,5 @@
-. ~/.zsh/env.zsh
 . ~/.zsh/alias.zsh
+. ~/.zsh/env.zsh
 . ~/.zsh/zsh_opts.zsh
 . ~/.zsh_completion
 
