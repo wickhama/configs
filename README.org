@@ -1,0 +1,2 @@
+* Barry's Dotfiles
+This whole thing is a bit of a mess but it works for me.
