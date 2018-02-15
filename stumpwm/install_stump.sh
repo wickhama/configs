@@ -6,4 +6,6 @@ else
     curl http://beta.quicklisp.org/quicklisp.lisp > /tmp/quicklisp.lisp
     sbcl --non-interactive --load /tmp/quicklisp.lisp --eval "(quicklisp-quickstart:install)" --eval "(ql:add-to-init-file)"
     sbcl --non-interactive --eval "(ql:quickload \"stumpwm\")"
+    sudo cp stumpwm.sh /usr/bin/stumpwm.sh
+    sudo cp stumpwm.desktop /usr/share/xsessions/stumpwm.desktop 
 fi
