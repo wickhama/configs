@@ -1,7 +1,6 @@
 . ~/.zsh/alias.zsh
 . ~/.zsh/env.zsh
 . ~/.zsh/zsh_opts.zsh
-. ~/.zsh_completion
 
 #zsh needs to update emacs' default directory
 if [ -n "$INSIDE_EMACS" ]; then

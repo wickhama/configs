@@ -49,7 +49,9 @@
 
 (define-command-and-bind chrome (my-run-or-raise "google-chrome-stable" "Google-chrome") "g")
 
-(define-command-and-bind alacritty (run-shell-command "emacsclient -c -e '(multi-term-next)'") "c")
+(define-command-and-bind terminal (run-or-raise "emacsclient -c -e '(progn (multi-term-next) (set-frame-name \"terminal\"))'"
+						'(:title "terminal")
+						nil) "c")
 
 (define-command-and-bind system-lock (run-shell-command "gnome-screensaver-command -l") "L")
 
