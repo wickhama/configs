@@ -13,7 +13,7 @@
 (defparameter mode-line-is-on t)
 
 ;startup programs
-(defvar startup-programs '("redshift" "gnome-screensaver" "emacs --daemon"))
+(defvar startup-programs '("redshift" "gnome-screensaver" "dropbox" "emacs --daemon"))
 (map nil 'run-shell-command startup-programs)
 (defparameter startup-programs '()) ;;only start programs the first time
 
@@ -47,11 +47,13 @@
   "Start Emacs or switch to it, if it is already running."
   (my-run-or-raise "emacsclient -c" "Emacs"))
 
-(define-command-and-bind chrome (my-run-or-raise "google-chrome-stable" "Google-chrome") "g")
+(define-command-and-bind terminal (run-shell-command "emacsclient -c -e '(multi-term-next)'") "c")
 
-(define-command-and-bind terminal (run-or-raise "emacsclient -c -e '(progn (multi-term-next) (set-frame-name \"terminal\"))'"
-						'(:title "terminal")
-						nil) "c")
+;(define-command-and-bind terminal (run-or-raise "emacsclient -c -e '(progn (multi-term-next) (set-frame-name \"terminal\"))'"
+;						'(:title "terminal")
+;						nil) "c")
+
+(define-command-and-bind chrome (my-run-or-raise "google-chrome-stable" "Google-chrome") "g")
 
 (define-command-and-bind system-lock (run-shell-command "gnome-screensaver-command -l") "L")
 
