@@ -19,6 +19,9 @@ if [ -z $(echo $SHELL | grep zsh) ]
 then
     chsh -s zsh
 fi
+
 install emacs
+git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+
 install google-chrome-stable
 

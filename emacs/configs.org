@@ -1,0 +1,30 @@
+#+TITLE:Barry Warnock's emacs configs
+#+AUTHOR:Barry Warnock
+
+* Org Mode
+** Appearance
+use an arrow instead of ellipsis and show pretty characters by default
+#+BEGIN_SRC emacs-lisp
+  ;;pretty arrow
+  (setq org-ellipsis " ⤵")
+
+  ;;default to showing latex style characters as unicode
+  (setq org-pretty-entities t)
+#+END_SRC
+
+** Usage
+[sub/super]scripts must be surrounded by curly braces
+#+BEGIN_SRC emacs-lisp
+  (setq org-use-sub-superscripts "{}")
+#+END_SRC
+
+* Lisps
+Enable smartparens strict mode in lisp modes
+#+BEGIN_SRC emacs-lisp
+  (defun enable-lisp-minor-modes ()
+    (smartparens-strict-mode t))
+
+  (add-hook 'lisp-mode-hook 'enable-lisp-minor-modes)
+  (add-hook 'emacs-lisp-mode-hook 'enable-lisp-minor-modes)
+#+END_SRC
+
