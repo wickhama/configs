@@ -18,6 +18,13 @@ use an arrow instead of ellipsis and show pretty characters by default
   (setq org-use-sub-superscripts "{}")
 #+END_SRC
 
+
+#+BEGIN_SRC emacs-lisp
+  (load-library "find-lisp")
+  (with-eval-after-load 'org (setq org-agenda-files
+         (find-lisp-find-files "~/Documents/" "\.org$")))
+#+END_SRC
+
 * Lisps
 Enable smartparens strict mode in lisp modes
 #+BEGIN_SRC emacs-lisp
