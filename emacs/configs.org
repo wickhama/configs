@@ -3,7 +3,8 @@
 
 * Org Mode
 ** Appearance
-use an arrow instead of ellipsis and show pretty characters by default
+*** prettify
+arrow instead of ellipsis and pretty characters by default
 #+BEGIN_SRC emacs-lisp
   ;;pretty arrow
   (setq org-ellipsis " ⤵")
@@ -13,11 +14,13 @@ use an arrow instead of ellipsis and show pretty characters by default
 #+END_SRC
 
 ** Usage
+*** sub/superscripts
 [sub/super]scripts must be surrounded by curly braces
 #+BEGIN_SRC emacs-lisp
   (setq org-use-sub-superscripts "{}")
 #+END_SRC
 
+*** agenda
 add org files in Documents to agenda
 #+BEGIN_SRC emacs-lisp
   (setq org-agenda-files (split-string
@@ -25,7 +28,14 @@ add org files in Documents to agenda
                           "\n"))
 #+END_SRC
 
+*** keybinds
+M-ret should insert new list items or headers
+#+BEGIN_SRC emacs-lisp
+  (org-defkey org-mode-map (kbd "M-<return>") 'org-meta-return)
+#+END_SRC
+
 * Lisps
+** smartparens
 Enable smartparens strict mode in lisp modes
 #+BEGIN_SRC emacs-lisp
   (defun enable-lisp-minor-modes ()
@@ -35,3 +45,36 @@ Enable smartparens strict mode in lisp modes
   (add-hook 'emacs-lisp-mode-hook 'enable-lisp-minor-modes)
 #+END_SRC
 
+** keybinds
+smartparens bindings
+#+BEGIN_SRC emacs-lisp
+  (define-key 'lisp-mode-shared-map (kbd "C-)") 'sp-forward-slurp-sexp)
+  (define-key 'lisp-mode-shared-map (kbd "C-(") 'sp-backward-slurp-sexp)
+  (define-key 'lisp-mode-shared-map (kbd "C-}") 'sp-foreward-barf-sexp)
+  (define-key 'lisp-mode-shared-map (kbd "C-{") 'sp-backward-barf-sexp)
+#+END_SRC
+
+* General File Functions
+** open this file
+ #+BEGIN_SRC emacs-lisp
+   (defun warnock/find-conffile ()
+     (interactive)
+     (find-file-existing (expand-file-name "configs.org" user-emacs-directory)))
+ #+END_SRC
+
+** open in notes
+#+BEGIN_SRC emacs-lisp
+  (defun warnock/open-notes ()
+    (interactive)
+    (helm-find-files-1 "~/Documents/notes/"))
+#+END_SRC
+
+* Spacemacs
+** keybinds
+#+BEGIN_SRC emacs-lisp
+  (spacemacs/set-leader-keys 
+    "ac" 'quick-calc
+    "fec" 'warnock/find-conffile
+    "fn" 'warnock/open-notes
+    )
+#+END_SRC
