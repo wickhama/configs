@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=StumpWM
+Comment=The StumpWM window manager
+Exec=/usr/local/bin/stumpwm.sh
+TryExec=/usr/bin/sbcl
+Type=Application

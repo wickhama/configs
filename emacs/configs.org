@@ -48,10 +48,10 @@ Enable smartparens strict mode in lisp modes
 ** keybinds
 smartparens bindings
 #+BEGIN_SRC emacs-lisp
-  (define-key 'lisp-mode-shared-map (kbd "C-)") 'sp-forward-slurp-sexp)
-  (define-key 'lisp-mode-shared-map (kbd "C-(") 'sp-backward-slurp-sexp)
-  (define-key 'lisp-mode-shared-map (kbd "C-}") 'sp-foreward-barf-sexp)
-  (define-key 'lisp-mode-shared-map (kbd "C-{") 'sp-backward-barf-sexp)
+  (define-key lisp-mode-shared-map (kbd "C-)") 'sp-forward-slurp-sexp)
+  (define-key lisp-mode-shared-map (kbd "C-(") 'sp-backward-slurp-sexp)
+  (define-key lisp-mode-shared-map (kbd "C-}") 'sp-foreward-barf-sexp)
+  (define-key lisp-mode-shared-map (kbd "C-{") 'sp-backward-barf-sexp)
 #+END_SRC
 
 * General File Functions
@@ -77,4 +77,10 @@ smartparens bindings
     "fec" 'warnock/find-conffile
     "fn" 'warnock/open-notes
     )
+#+END_SRC
+* Misc
+snippets only live here until I can think of a more appropriate header for them
+** auto-follow symlinks
+#+BEGIN_SRC emacs-lisp
+(setq vc-follow-symlinks t)
 #+END_SRC

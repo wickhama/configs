@@ -1,4 +1,5 @@
 configs_dir=$(pwd)
+rm -f ~/.zsh #prevent creating the symlink to zsh inside of zsh
 ln -sf $configs_dir/zsh ~/.zsh
 ln -sf $configs_dir/zsh/.zshrc ~/.zshrc
 
