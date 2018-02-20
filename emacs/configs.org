@@ -34,6 +34,12 @@ M-ret should insert new list items or headers
   (org-defkey org-mode-map (kbd "M-<return>") 'org-meta-return)
 #+END_SRC
 
+*** mobile org
+#+BEGIN_SRC emacs-lisp
+  (setq org-directory "~/Documents")
+  (setq org-mobile-inbox-for-pull "~/Documents/notes/mobile.org")
+  (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
+#+END_SRC
 * Lisps
 ** smartparens
 Enable smartparens strict mode in lisp modes
