@@ -56,7 +56,7 @@ smartparens bindings
 #+BEGIN_SRC emacs-lisp
   (define-key lisp-mode-shared-map (kbd "C-)") 'sp-forward-slurp-sexp)
   (define-key lisp-mode-shared-map (kbd "C-(") 'sp-backward-slurp-sexp)
-  (define-key lisp-mode-shared-map (kbd "C-}") 'sp-foreward-barf-sexp)
+  (define-key lisp-mode-shared-map (kbd "C-}") 'sp-forward-barf-sexp)
   (define-key lisp-mode-shared-map (kbd "C-{") 'sp-backward-barf-sexp)
 #+END_SRC
 
@@ -74,15 +74,24 @@ smartparens bindings
     (interactive)
     (helm-find-files-1 "~/Documents/notes/"))
 #+END_SRC
+** open in school
+#+BEGIN_SRC emacs-lisp
+  (defun warnock/open-school ()
+    (interactive)
+    (helm-find-files-1 "~/Documents/notes/school/fourth_year/"))
+#+END_SRC
+
 
 * Spacemacs
 ** keybinds
 #+BEGIN_SRC emacs-lisp
-  (spacemacs/set-leader-keys 
-    "ac" 'quick-calc
-    "fec" 'warnock/find-conffile
-    "fn" 'warnock/open-notes
-    )
+    (spacemacs/declare-prefix "fn" "open-in-notes")
+    (spacemacs/set-leader-keys 
+      "ac" 'quick-calc
+      "fec" 'warnock/find-conffile
+      "fnn" 'warnock/open-notes
+      "fns" 'warnock/open-school
+      )
 #+END_SRC
 * Misc
 snippets only live here until I can think of a more appropriate header for them

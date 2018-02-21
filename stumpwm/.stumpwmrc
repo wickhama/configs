@@ -24,14 +24,28 @@
 (defun get_time ()
   (run-shell-command "date +'%b %d %I:%M' | tr -d '\\n'" t))
 
+(defun get_dropbox_status ()
+  (if (string/= ""
+               (run-shell-command "dropbox-cli status | grep \"Up to date\"" t))
+      "✔"
+      "✗"))
+
 (defun get_network ()
   (let ((nwstr (run-shell-command "nmcli | grep -Po '(?!docker)(?<=connected to ).+' | tr -d '\\n'" t)))
     (if (string= "" nwstr)
 	"Not Connected"
-	nwstr)))
+	(if (search "Wired" nwstr)
+      "Wired"
+      nwstr))))
+
+(defun get_mode_line_list ()
+  (remove-if (lambda (x) (string= "" x)) (list (get_dropbox_status) (get_battery) (get_time) (get_network))))
+
+(defun get_mode_line_string ()
+  (format nil "~{~a | ~}%w" (get_mode_line_list)))
 
 (setf *screen-mode-line-format*
-      `((:eval (get_battery)) " | " (:eval (get_time)) " | " (:eval (get_network)) " | %w"))
+      `((:eval (get_mode_line_string))))
 
 ;utility functions
 (defmacro define-command-and-bind (name command key &optional (key-map '*root-map*))
