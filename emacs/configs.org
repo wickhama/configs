@@ -81,17 +81,24 @@ smartparens bindings
     (helm-find-files-1 "~/Documents/notes/school/fourth_year/"))
 #+END_SRC
 
-
 * Spacemacs
 ** keybinds
 #+BEGIN_SRC emacs-lisp
-    (spacemacs/declare-prefix "fn" "open-in-notes")
-    (spacemacs/set-leader-keys 
-      "ac" 'quick-calc
-      "fec" 'warnock/find-conffile
-      "fnn" 'warnock/open-notes
-      "fns" 'warnock/open-school
-      )
+  (spacemacs/declare-prefix "fn" "open-in-notes")
+  (spacemacs/declare-prefix "am" "mobile-org")
+  (spacemacs/set-leader-keys 
+                                          ;applications
+    ;;calc
+    "ac" 'quick-calc
+    ;;mobile-org
+    "amp" 'org-mobile-push
+    "amf" 'org-mobile-pull
+
+                                          ;files
+    "fec" 'warnock/find-conffile
+    "fnn" 'warnock/open-notes
+    "fns" 'warnock/open-school
+    )
 #+END_SRC
 * Misc
 snippets only live here until I can think of a more appropriate header for them

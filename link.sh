@@ -4,6 +4,8 @@ ln -sf $configs_dir/zsh ~/.zsh
 ln -sf $configs_dir/zsh/.zshrc ~/.zshrc
 
 ln -sf $configs_dir/stumpwm/.stumpwmrc ~/.stumpwmrc
+sudo cp -f $configs_dir/stumpwm/stumpwm.desktop /usr/share/xsessions/
+sudo ln -sf $configs_dir/stumpwm/stumpwm.sh /usr/local/bin/
 
 ln -sf $configs_dir/X/.Xkbmap ~/.Xkbmap
 
