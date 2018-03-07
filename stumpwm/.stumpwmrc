@@ -1,9 +1,17 @@
 ;set up
 (in-package :stumpwm)
+
 (stumpwm:set-prefix-key (stumpwm:kbd "C-j"))
 (setf *mouse-focus-policy* :click)
 (define-key *root-map* (kbd "G") *GROUPS-MAP*)
 (set-font "-*-terminus-medium-r-normal-*-16-*-*-*-*-*-iso10646-1");use a font that is included with X11 and isn't terrible
+
+                                        ;swank
+(require :swank)
+(swank-loader:init)
+(swank:create-server :port 4004
+                     :style swank:*communication-style*
+                     :dont-close t)
 
 ;variables
 (defvar *run-or-raise-all-groups* nil)
