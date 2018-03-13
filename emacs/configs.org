@@ -36,17 +36,36 @@ add org files to agenda
   (setq org-default-notes-file "~/Documents/notes/org/tasks.org")
   (setq org-capture-templates
         '(
+          ;; classic org captures
           ("t" "Todo" entry (file+headline "inbox.org" "Tasks")
-           "* TODO %^{prompt|name}\n %?\n  %i\n")
+           "* TODO %^{name}\n %?\n  %i\n")
           ("n" "Note/Data" entry (file+headline "inbox.org" "Notes/Data")
            "* %?   \n  %i\n  %u\n  %a")
-          ))
+
+          ;; ledger captures
+          ("l" "ledger entries")
+          ("le" "expense" plain
+           (file "~/Documents/notes/ledger")
+           "
+%(org-read-date) * %^{name}
+    Expenses:%^{to}  $%^{amount}
+    Assets:%^{from}
+  ")
+          ("li" "income" plain
+           (file "~/Documents/notes/ledger")
+           "
+%(org-read-date) * %^{name}
+    Assets:%^{to}  $%^{amount}
+    Income:%^{from}
+  ")))
 #+END_SRC
 *** refiling
 #+BEGIN_SRC elisp
   (setq org-refile-targets '((nil :maxlevel . 2)
                              (org-agenda-files :maxlevel . 2)
                              ))
+  (setq org-refile-use-outline-path 'file)
+  (setq org-refile-allow-creating-parent-nodes t)
 #+END_SRC
 *** archiving
 #+BEGIN_SRC elisp
@@ -101,7 +120,32 @@ set eclim configs
   (setq eclimd-default-workspace "~/eclipse-workspace"
         eclimd-wait-for-process t)
 #+END_SRC
+* General File Functions
+** open this file
+ #+BEGIN_SRC emacs-lisp
+   (defun warnock/find-conffile ()
+     (interactive)
+     (find-file-existing (expand-file-name "configs.org" user-emacs-directory)))
+ #+END_SRC
 
+** open in notes
+#+BEGIN_SRC emacs-lisp
+  (defun warnock/open-notes ()
+    (interactive)
+    (helm-find-files-1 "~/Documents/notes/"))
+#+END_SRC
+** open in org
+#+BEGIN_SRC emacs-lisp
+  (defun warnock/open-org ()
+    (interactive)
+    (helm-find-files-1 "~/Documents/notes/org/"))
+#+END_SRC
+** open in school
+#+BEGIN_SRC emacs-lisp
+  (defun warnock/open-school ()
+    (interactive)
+    (helm-find-files-1 "~/Documents/notes/school/fourth_year/"))
+#+END_SRC
 * Spacemacs
 ** keybinds
 #+BEGIN_SRC emacs-lisp
@@ -119,27 +163,8 @@ set eclim configs
     "fec" 'warnock/find-conffile
     "fnn" 'warnock/open-notes
     "fns" 'warnock/open-school
+    "fno" 'warnock/open-org
     )
-#+END_SRC
-* General File Functions
-** open this file
- #+BEGIN_SRC emacs-lisp
-   (defun warnock/find-conffile ()
-     (interactive)
-     (find-file-existing (expand-file-name "configs.org" user-emacs-directory)))
- #+END_SRC
-
-** open in notes
-#+BEGIN_SRC emacs-lisp
-  (defun warnock/open-notes ()
-    (interactive)
-    (helm-find-files-1 "~/Documents/notes/"))
-#+END_SRC
-** open in school
-#+BEGIN_SRC emacs-lisp
-  (defun warnock/open-school ()
-    (interactive)
-    (helm-find-files-1 "~/Documents/notes/school/fourth_year/"))
 #+END_SRC
 * Misc
 snippets only live here until I can think of a more appropriate header for them
@@ -151,14 +176,14 @@ snippets only live here until I can think of a more appropriate header for them
 #+BEGIN_SRC elisp
   (delete-selection-mode 1)
 #+END_SRC
-** backup files go in /tmp
+** don't create useless files
 #+BEGIN_SRC emacs-lisp
   (setq backup-directory-alist
                   `((".*" . ,temporary-file-directory)))
   (setq auto-save-file-name-transforms
         `((".*" ,temporary-file-directory t))) 
+  (setq create-lockfiles nil)
 #+END_SRC
-
 ** use chrome when opening links
 #+BEGIN_SRC emacs-lisp
   (setq browse-url-browser-function 'browse-url-chrome)
