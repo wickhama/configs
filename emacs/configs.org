@@ -34,25 +34,28 @@ add org files to agenda
 *** capturing
 #+BEGIN_SRC elisp
   (setq org-default-notes-file "~/Documents/notes/org/tasks.org")
+  (setq org-inbox-file "~/Documents/notes/org/inbox.org")
+  (setq ledger-file "~/Documents/notes/ledger")
+
   (setq org-capture-templates
         '(
           ;; classic org captures
-          ("t" "Todo" entry (file+headline "inbox.org" "Tasks")
+          ("t" "Todo" entry (file+headline org-inbox-file "Tasks")
            "* TODO %^{name}\n %?\n  %i\n")
-          ("n" "Note/Data" entry (file+headline "inbox.org" "Notes/Data")
+          ("n" "Note/Data" entry (file+headline org-inbox-file "Notes/Data")
            "* %?   \n  %i\n  %u\n  %a")
 
           ;; ledger captures
           ("l" "ledger entries")
           ("le" "expense" plain
-           (file "~/Documents/notes/ledger")
+           (file ledger-file)
            "
 %(org-read-date) * %^{name}
     Expenses:%^{to}  $%^{amount}
     Assets:%^{from}
   ")
           ("li" "income" plain
-           (file "~/Documents/notes/ledger")
+           (file ledger-file)
            "
 %(org-read-date) * %^{name}
     Assets:%^{to}  $%^{amount}
@@ -61,12 +64,14 @@ add org files to agenda
 #+END_SRC
 *** refiling
 #+BEGIN_SRC elisp
-  (setq org-refile-targets '((nil :maxlevel . 2)
-                             (org-agenda-files :maxlevel . 2)
+  (setq org-refile-targets '((nil :maxlevel . 3)
+                             (org-agenda-files :maxlevel . 3)
                              ))
   (setq org-refile-use-outline-path 'file)
   (setq org-refile-allow-creating-parent-nodes t)
+  (setq org-outline-path-complete-in-steps nil)
 #+END_SRC
+
 *** archiving
 #+BEGIN_SRC elisp
   (defun org-archive-done-tasks ()
@@ -89,12 +94,6 @@ M-ret should insert new list items or headers
   (org-defkey org-mode-map (kbd "M-<return>") 'org-meta-return)
 #+END_SRC
 
-*** mobile org
-#+BEGIN_SRC emacs-lisp
-  (setq org-directory "~/Documents")
-  (setq org-mobile-inbox-for-pull "~/Documents/notes/mobile.org")
-  (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
-#+END_SRC
 * Lisps
 ** smartparens
 Enable smartparens strict mode in lisp modes
@@ -155,9 +154,6 @@ set eclim configs
                                           ;applications
     ;;calc
     "ac" 'quick-calc
-    ;;mobile-org
-    "amp" 'org-mobile-push
-    "amf" 'org-mobile-pull
 
                                           ;files
     "fec" 'warnock/find-conffile
@@ -166,15 +162,40 @@ set eclim configs
     "fno" 'warnock/open-org
     )
 #+END_SRC
+* Stumpwm
+Utility functions to make interacting with emacs through stumpwm easier
+** next-frame
+smart about the terminal frame
+#+BEGIN_SRC emacs-lisp
+  (defun stumpwm/next-frame ()
+    "Switch to the next emacs frame, if we're in a term and there is no next, create one"
+    (let* (
+           (frame (selected-frame))
+           (switch-next (lambda ()
+                          (select-frame-set-input-focus (next-frame))))
+           (create-frame (lambda ()
+                           (with-current-buffer "*scratch*" (make-frame '((window-system . x))))))
+           (my-other-frame (lambda ()
+                             (if (equal (next-frame) (selected-frame)) (funcall create-frame) (next-frame))))
+           (frame-name (frame-parameter frame 'name))
+           (one-frame? (lambda ()
+                         (equal frame (next-frame)))))
+      (cond ((and
+              (string= frame-name "emacs-term")
+              (funcall one-frame?))
+             (my-other-frame))
+            ((= (length (frame-list)) 1) (funcall create-frame))
+            (t (funcall switch-next)))))
+#+END_SRC
 * Misc
-snippets only live here until I can think of a more appropriate header for them
+  snippets only live here until I can think of a more appropriate header for them
 ** auto-follow symlinks
 #+BEGIN_SRC emacs-lisp
 (setq vc-follow-symlinks t)
 #+END_SRC
 ** replace selection with paste
 #+BEGIN_SRC elisp
-  (delete-selection-mode 1)
+  (delete-selection-mode)
 #+END_SRC
 ** don't create useless files
 #+BEGIN_SRC emacs-lisp
