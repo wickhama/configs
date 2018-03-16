@@ -162,31 +162,6 @@ set eclim configs
     "fno" 'warnock/open-org
     )
 #+END_SRC
-* Stumpwm
-Utility functions to make interacting with emacs through stumpwm easier
-** next-frame
-smart about the terminal frame
-#+BEGIN_SRC emacs-lisp
-  (defun stumpwm/next-frame ()
-    "Switch to the next emacs frame, if we're in a term and there is no next, create one"
-    (let* (
-           (frame (selected-frame))
-           (switch-next (lambda ()
-                          (select-frame-set-input-focus (next-frame))))
-           (create-frame (lambda ()
-                           (with-current-buffer "*scratch*" (make-frame '((window-system . x))))))
-           (my-other-frame (lambda ()
-                             (if (equal (next-frame) (selected-frame)) (funcall create-frame) (next-frame))))
-           (frame-name (frame-parameter frame 'name))
-           (one-frame? (lambda ()
-                         (equal frame (next-frame)))))
-      (cond ((and
-              (string= frame-name "emacs-term")
-              (funcall one-frame?))
-             (my-other-frame))
-            ((= (length (frame-list)) 1) (funcall create-frame))
-            (t (funcall switch-next)))))
-#+END_SRC
 * Misc
   snippets only live here until I can think of a more appropriate header for them
 ** auto-follow symlinks
