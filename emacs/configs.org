@@ -32,7 +32,7 @@ add org files to agenda
 #+END_SRC
 
 *** capturing
-#+BEGIN_SRC elisp
+#+BEGIN_SRC emacs-lisp
   (setq org-default-notes-file "~/Documents/notes/org/tasks.org")
   (setq org-inbox-file "~/Documents/notes/org/inbox.org")
   (setq ledger-file "~/Documents/notes/ledger")
@@ -63,7 +63,7 @@ add org files to agenda
   ")))
 #+END_SRC
 *** refiling
-#+BEGIN_SRC elisp
+#+BEGIN_SRC emacs-lisp
   (setq org-refile-targets '((nil :maxlevel . 3)
                              (org-agenda-files :maxlevel . 3)
                              ))
@@ -73,7 +73,7 @@ add org files to agenda
 #+END_SRC
 
 *** archiving
-#+BEGIN_SRC elisp
+#+BEGIN_SRC emacs-lisp
   (defun org-archive-done-tasks ()
     (interactive)
     (org-map-entries
