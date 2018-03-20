@@ -69,7 +69,7 @@
   "Start Emacs or switch to it, if it is already running."
   (my-run-or-raise "emacsclient -c -a=''" "Emacs"))
 
-(define-command-and-bind chrome (run-shell-command "emacsclient -e '(multi-term-next)'") "c")
+(define-command-and-bind terminal (run-shell-command "emacsclient -e '(multi-term-next)'") "c")
 
 (define-command-and-bind chrome (my-run-or-raise "google-chrome-stable" "Google-chrome") "g")
 
