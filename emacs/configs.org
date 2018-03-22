@@ -162,6 +162,14 @@ set eclim configs
     "fno" 'warnock/open-org
     )
 #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (defhydra hydra-terminal (global-map "C-c t")
+    "terminal"
+    ("j" multi-term-next "next")
+    ("k" multi-term-prev "prev")
+    ("c" multi-term  "new" :color blue)
+    ("q" nil "cancel"))
+#+END_SRC
 * Misc
   snippets only live here until I can think of a more appropriate header for them
 ** auto-follow symlinks
