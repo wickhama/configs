@@ -1,2 +1,2 @@
-#!/usr/bin/sh
+#!/bin/sh
 sbcl --eval "(ql:quickload \"stumpwm\")" --eval "(stumpwm:stumpwm)"
