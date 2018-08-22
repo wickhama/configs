@@ -23,17 +23,30 @@
 ;startup programs
 (defvar startup-programs '())
 (map nil 'run-shell-command startup-programs)
-(defparameter startup-programs '()) ;;only start programs the first time
+(defvar startup-programs '("redshift" "gnome-screensaver" "dropbox"))
 
 ; mode line
 (defun get_battery ()
   (run-shell-command "upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep -Po '(?<=percentage:\\s{10})[0-9]+%' | tr -d '\\n'" t))
 
+(defun get_dropbox_status ()
+  (if (string/= ""
+                (run-shell-command "dropbox-cli status | grep \"Up to date\"" t))
+      "✔"
+      "✗"))
+(defun get_network ()
+  (let ((nwstr (run-shell-command "nmcli | grep -Po '(?!docker)(?<=connected to ).+' | tr -d '\\n'" t)))
+    (if (string= "" nwstr)
+	      "Not Connected"
+	      (if (search "Wired" nwstr)
+            "Wired"
+            nwstr))))
+
 (defun get_time ()
   (run-shell-command "date +'%b %d %I:%M' | tr -d '\\n'" t))
 
 (defun get_mode_line_list ()
-  (remove-if (lambda (x) (string= "" x)) (list (get_battery) (get_time))))
+  (remove-if (lambda (x) (string= "" x)) (list (get_dropbox_status) (get_battery) (get_time) (get_network))))
 
 (defun get_mode_line_string ()
   (format nil "~{~a | ~}%w" (get_mode_line_list)))
