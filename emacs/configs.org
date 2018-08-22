@@ -23,13 +23,14 @@ arrow instead of ellipsis and pretty characters by default
 *** agenda
 add org files to agenda
 #+BEGIN_SRC emacs-lisp
-  (customize-set-variable 'org-agenda-files '("~/org"
-                                              ))
+  (customize-set-variable 'org-agenda-files '("~/org"))
 #+END_SRC
+
 *** todo states
 #+BEGIN_SRC emacs-lisp
 (setq org-todo-keywords '((sequence "TODO" "REVIEW" "RELEASE" "|" "DONE")))
 #+END_SRC
+
 *** capturing
 #+BEGIN_SRC emacs-lisp
   (setq org-default-notes-file "~/org/tasks.org")
@@ -61,6 +62,7 @@ add org files to agenda
     Income:%^{from}
   ")))
 #+END_SRC
+
 *** refiling
 #+BEGIN_SRC emacs-lisp
   (setq org-refile-targets '((nil :maxlevel . 3)
@@ -87,6 +89,7 @@ add org files to agenda
      "/CANCELLED" 'file)
     )
 #+END_SRC
+
 *** keybinds
 M-ret should insert new list items or headers
 #+BEGIN_SRC emacs-lisp
@@ -104,14 +107,6 @@ Enable smartparens strict mode in lisp modes
   (add-hook 'emacs-lisp-mode-hook 'enable-lisp-minor-modes)
 #+END_SRC
 
-** keybinds
-smartparens bindings
-#+BEGIN_SRC emacs-lisp
-  (define-key lisp-mode-shared-map (kbd "C-)") 'sp-forward-slurp-sexp)
-  (define-key lisp-mode-shared-map (kbd "C-(") 'sp-backward-slurp-sexp)
-  (define-key lisp-mode-shared-map (kbd "C-}") 'sp-forward-barf-sexp)
-  (define-key lisp-mode-shared-map (kbd "C-{") 'sp-backward-barf-sexp)
-#+END_SRC
 * General File Functions
 ** open this file
  #+BEGIN_SRC emacs-lisp
@@ -120,29 +115,16 @@ smartparens bindings
      (find-file-existing (expand-file-name "configs.org" user-emacs-directory)))
  #+END_SRC
 
-** open in notes
-#+BEGIN_SRC emacs-lisp
-  (defun warnock/open-notes ()
-    (interactive)
-    (helm-find-files-1 "~/Documents/notes/"))
-#+END_SRC
 ** open in org
 #+BEGIN_SRC emacs-lisp
   (defun warnock/open-org ()
     (interactive)
     (helm-find-files-1 "~/org/"))
 #+END_SRC
-** open in school
-#+BEGIN_SRC emacs-lisp
-  (defun warnock/open-school ()
-    (interactive)
-    (helm-find-files-1 "~/Documents/notes/school/fourth_year/"))
-#+END_SRC
+
 * Spacemacs
 ** keybinds
 #+BEGIN_SRC emacs-lisp
-  (spacemacs/declare-prefix "fn" "open-in-notes")
-  (spacemacs/declare-prefix "am" "mobile-org")
   (spacemacs/set-leader-keys 
                                           ;applications
     ;;calc
@@ -150,9 +132,7 @@ smartparens bindings
 
                                           ;files
     "fec" 'warnock/find-conffile
-    "fnn" 'warnock/open-notes
-    "fns" 'warnock/open-school
-    "fno" 'warnock/open-org
+    "fn" 'warnock/open-org
     )
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
@@ -163,12 +143,14 @@ smartparens bindings
     ("c" multi-term  "new" :color blue)
     ("q" nil "cancel"))
 #+END_SRC
+
 * Terminal
 ** save history for scrolling
 #+BEGIN_SRC emacs-lisp
   (setq multi-term-scroll-show-maximum-output t)
 #+END_SRC
-** toggle line and char mode with C-c C-k
+
+** toggle line and char mode
 #+BEGIN_SRC emacs-lisp
   (defun warnock/term-toggle-mode ()
     (interactive)
@@ -183,16 +165,19 @@ smartparens bindings
   (add-to-list 'term-bind-key-alist '("C-c C-k" . warnock/term-toggle-mode))
   (add-to-list 'term-bind-key-alist '("C-z" . term-send-raw))
 #+END_SRC
+
 * Misc
   snippets only live here until I can think of a more appropriate header for them
 ** auto-follow symlinks
 #+BEGIN_SRC emacs-lisp
 (setq vc-follow-symlinks t)
 #+END_SRC
+
 ** replace selection with paste
 #+BEGIN_SRC elisp
   (delete-selection-mode 1)
 #+END_SRC
+
 ** don't create useless files
 #+BEGIN_SRC emacs-lisp
   (setq backup-directory-alist
@@ -201,6 +186,7 @@ smartparens bindings
         `((".*" ,temporary-file-directory t))) 
   (setq create-lockfiles nil)
 #+END_SRC
+
 ** use chrome when opening links
 #+BEGIN_SRC emacs-lisp
   (setq browse-url-browser-function 'browse-url-chrome)
