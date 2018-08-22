@@ -21,7 +21,7 @@
 (defparameter mode-line-is-on t)
 
 ;startup programs
-(defvar startup-programs '("redshift" "gnome-screensaver" "dropbox"))
+(defvar startup-programs '())
 (map nil 'run-shell-command startup-programs)
 (defparameter startup-programs '()) ;;only start programs the first time
 
@@ -32,22 +32,8 @@
 (defun get_time ()
   (run-shell-command "date +'%b %d %I:%M' | tr -d '\\n'" t))
 
-(defun get_dropbox_status ()
-  (if (string/= ""
-               (run-shell-command "dropbox-cli status | grep \"Up to date\"" t))
-      "✔"
-      "✗"))
-
-(defun get_network ()
-  (let ((nwstr (run-shell-command "nmcli | grep -Po '(?!docker)(?<=connected to ).+' | tr -d '\\n'" t)))
-    (if (string= "" nwstr)
-	"Not Connected"
-	(if (search "Wired" nwstr)
-      "Wired"
-      nwstr))))
-
 (defun get_mode_line_list ()
-  (remove-if (lambda (x) (string= "" x)) (list (get_dropbox_status) (get_battery) (get_time) (get_network))))
+  (remove-if (lambda (x) (string= "" x)) (list (get_battery) (get_time))))
 
 (defun get_mode_line_string ()
   (format nil "~{~a | ~}%w" (get_mode_line_list)))

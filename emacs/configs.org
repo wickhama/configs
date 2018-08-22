@@ -23,18 +23,17 @@ arrow instead of ellipsis and pretty characters by default
 *** agenda
 add org files to agenda
 #+BEGIN_SRC emacs-lisp
-  (customize-set-variable 'org-agenda-files '("~/Documents/notes/org/inbox.org"
-                                              "~/Documents/notes/org/tasks.org"
-                                              "~/Documents/notes/org/stasks.org"
-                                              "~/Documents/notes/org/journal.org"
-                                              "~/Documents/notes/org/kb.org"
+  (customize-set-variable 'org-agenda-files '("~/org"
                                               ))
 #+END_SRC
-
+*** todo states
+#+BEGIN_SRC emacs-lisp
+(setq org-todo-keywords '((sequence "TODO" "REVIEW" "RELEASE" "|" "DONE")))
+#+END_SRC
 *** capturing
 #+BEGIN_SRC emacs-lisp
-  (setq org-default-notes-file "~/Documents/notes/org/tasks.org")
-  (setq org-inbox-file "~/Documents/notes/org/inbox.org")
+  (setq org-default-notes-file "~/org/tasks.org")
+  (setq org-inbox-file "~/inbox.org")
   (setq ledger-file "~/Documents/notes/ledger")
 
   (setq org-capture-templates
@@ -131,7 +130,7 @@ smartparens bindings
 #+BEGIN_SRC emacs-lisp
   (defun warnock/open-org ()
     (interactive)
-    (helm-find-files-1 "~/Documents/notes/org/"))
+    (helm-find-files-1 "~/org/"))
 #+END_SRC
 ** open in school
 #+BEGIN_SRC emacs-lisp
@@ -163,6 +162,26 @@ smartparens bindings
     ("k" multi-term-prev "prev")
     ("c" multi-term  "new" :color blue)
     ("q" nil "cancel"))
+#+END_SRC
+* Terminal
+** save history for scrolling
+#+BEGIN_SRC emacs-lisp
+  (setq multi-term-scroll-show-maximum-output t)
+#+END_SRC
+** toggle line and char mode with C-c C-k
+#+BEGIN_SRC emacs-lisp
+  (defun warnock/term-toggle-mode ()
+    (interactive)
+    (if (term-in-line-mode)
+        (term-char-mode)
+      (term-line-mode)))
+#+END_SRC
+
+** bindings
+#+BEGIN_SRC emacs-lisp
+  (define-key term-mode-map (kbd "C-c C-k") 'warnock/term-toggle-mode)
+  (add-to-list 'term-bind-key-alist '("C-c C-k" . warnock/term-toggle-mode))
+  (add-to-list 'term-bind-key-alist '("C-z" . term-send-raw))
 #+END_SRC
 * Misc
   snippets only live here until I can think of a more appropriate header for them
