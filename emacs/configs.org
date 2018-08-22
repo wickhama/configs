@@ -113,12 +113,6 @@ smartparens bindings
   (define-key lisp-mode-shared-map (kbd "C-}") 'sp-forward-barf-sexp)
   (define-key lisp-mode-shared-map (kbd "C-{") 'sp-backward-barf-sexp)
 #+END_SRC
-* TODO Eclim
-set eclim configs
-#+BEGIN_SRC elisp
-  (setq eclimd-default-workspace "~/eclipse-workspace"
-        eclimd-wait-for-process t)
-#+END_SRC
 * General File Functions
 ** open this file
  #+BEGIN_SRC emacs-lisp
@@ -178,7 +172,7 @@ set eclim configs
 #+END_SRC
 ** replace selection with paste
 #+BEGIN_SRC elisp
-  (delete-selection-mode)
+  (delete-selection-mode 1)
 #+END_SRC
 ** don't create useless files
 #+BEGIN_SRC emacs-lisp
