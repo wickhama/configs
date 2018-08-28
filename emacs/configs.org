@@ -107,6 +107,10 @@ Enable smartparens strict mode in lisp modes
   (add-hook 'emacs-lisp-mode-hook 'enable-lisp-minor-modes)
 #+END_SRC
 
+** lisp commands won't switch state
+#+BEGIN_SRC emacs-lisp
+  (setq evil-lisp-state-enter-lisp-state-on-command nil)
+#+END_SRC
 * General File Functions
 ** open this file
  #+BEGIN_SRC emacs-lisp
@@ -120,28 +124,6 @@ Enable smartparens strict mode in lisp modes
   (defun warnock/open-org ()
     (interactive)
     (helm-find-files-1 "~/org/"))
-#+END_SRC
-
-* Spacemacs
-** keybinds
-#+BEGIN_SRC emacs-lisp
-  (spacemacs/set-leader-keys 
-                                          ;applications
-    ;;calc
-    "ac" 'quick-calc
-
-                                          ;files
-    "fec" 'warnock/find-conffile
-    "fn" 'warnock/open-org
-    )
-#+END_SRC
-#+BEGIN_SRC emacs-lisp
-  (defhydra hydra-terminal (global-map "C-c t")
-    "terminal"
-    ("j" multi-term-next "next")
-    ("k" multi-term-prev "prev")
-    ("c" multi-term  "new" :color blue)
-    ("q" nil "cancel"))
 #+END_SRC
 
 * Terminal
@@ -164,6 +146,67 @@ Enable smartparens strict mode in lisp modes
   (define-key term-mode-map (kbd "C-c C-k") 'warnock/term-toggle-mode)
   (add-to-list 'term-bind-key-alist '("C-c C-k" . warnock/term-toggle-mode))
   (add-to-list 'term-bind-key-alist '("C-z" . term-send-raw))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  ;; substitute emacs state for insert state
+    (evil-define-key 'normal term-raw-map "i"
+      (lambda ()
+        (interactive)
+        (evil-hybrid-state)))
+    (evil-define-key 'normal term-raw-map "a"
+      (lambda ()
+        (interactive)
+        (evil-hybrid-state)))
+    (evil-define-key 'emacs term-raw-map "<escape>"
+      (lambda ()
+        (interactive)
+        (evil-normal-state)))
+
+  (defun config//term-normal-state ()
+    "Enable `term-line-mode' when in normal state in `term-mode' buffer."
+    (term-line-mode))
+
+  (defun config//term-insert-state ()
+    "Enable `term-char-mode' when in insert state in a `term-mode' buffer."
+    (when (get-buffer-process (current-buffer))
+      (term-char-mode)
+      ))
+
+  (defun config//term-evil-bindings ()
+    "Enable term support for vim and hybrid editing styles."
+    (add-hook 'evil-hybrid-state-entry-hook 'config//term-insert-state nil t)
+    (add-hook 'evil-insert-state-entry-hook 'config//term-insert-state nil t)
+    (add-hook 'evil-hybrid-state-exit-hook 'config//term-normal-state nil t)
+    (add-hook 'evil-insert-state-exit-hook 'config//term-normal-state nil t))
+
+  (setq term-char-mode-point-at-process-mark t)
+  (add-hook 'term-mode-hook 'config//term-evil-bindings)
+#+END_SRC
+
+terminal hydra
+#+BEGIN_SRC emacs-lisp
+  (defhydra hydra-terminal (global-map "C-c t")
+    "terminal"
+    ("j" multi-term-next "next")
+    ("k" multi-term-prev "prev")
+    ("c" multi-term  "new" :color blue)
+    ("q" nil "cancel"))
+#+END_SRC
+
+* Spacemacs
+** TODO keybinds
+#+BEGIN_SRC emacs-lisp
+  (spacemacs/set-leader-keys 
+                                          ;applications
+                                          ;;calc
+    "ac" 'quick-calc
+                                          ;;terminal
+    "at" 'hydra-terminal/body
+                                          ;files
+    "fec" 'warnock/find-conffile
+    "fn" 'warnock/open-org
+    )
 #+END_SRC
 
 * Misc
