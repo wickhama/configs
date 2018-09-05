@@ -143,18 +143,12 @@ Enable smartparens strict mode in lisp modes
 
 ** bindings
 #+BEGIN_SRC emacs-lisp
-  (define-key term-mode-map (kbd "C-c C-k") 'warnock/term-toggle-mode)
-  (add-to-list 'term-bind-key-alist '("C-c C-k" . warnock/term-toggle-mode))
-  (add-to-list 'term-bind-key-alist '("C-z" . term-send-raw))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
   ;; substitute emacs state for insert state
-    (evil-define-key 'normal term-raw-map "i"
+    (evil-define-key 'normal term-mode-map "i"
       (lambda ()
         (interactive)
         (evil-hybrid-state)))
-    (evil-define-key 'normal term-raw-map "a"
+    (evil-define-key 'normal term-raw-map "i"
       (lambda ()
         (interactive)
         (evil-hybrid-state)))
