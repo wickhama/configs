@@ -7,3 +7,5 @@ alias la='ls -la'
 alias cemacs='emacsclient -c'
 #when emacs is started from the terminal, keep it there
 alias temacs='emacs -nw'
+
+alias centos='docker run -i -t --rm=true centos /bin/bash'

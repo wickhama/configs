@@ -26,9 +26,12 @@ add org files to agenda
   (customize-set-variable 'org-agenda-files '("~/org"))
 #+END_SRC
 
-*** todo states
+custom agendas
 #+BEGIN_SRC emacs-lisp
-(setq org-todo-keywords '((sequence "TODO" "REVIEW" "RELEASE" "|" "DONE")))
+  (setq org-agenda-custom-commands
+        '(("w" "Work"
+          ((tags-todo "USERSTORY")
+            (tags-todo "GENERALWORK")))))
 #+END_SRC
 
 *** capturing
@@ -132,15 +135,6 @@ Enable smartparens strict mode in lisp modes
   (setq multi-term-scroll-show-maximum-output t)
 #+END_SRC
 
-** toggle line and char mode
-#+BEGIN_SRC emacs-lisp
-  (defun warnock/term-toggle-mode ()
-    (interactive)
-    (if (term-in-line-mode)
-        (term-char-mode)
-      (term-line-mode)))
-#+END_SRC
-
 ** bindings
 #+BEGIN_SRC emacs-lisp
   ;; substitute emacs state for insert state
@@ -188,6 +182,11 @@ terminal hydra
     ("q" nil "cancel"))
 #+END_SRC
 
+** default to hybrid state
+#+BEGIN_SRC emacs-lisp
+  (delete 'term-mode evil-insert-state-modes)
+  (add-to-list 'evil-hybrid-state-modes 'term-mode)
+#+END_SRC
 * Spacemacs
 ** TODO keybinds
 #+BEGIN_SRC emacs-lisp
