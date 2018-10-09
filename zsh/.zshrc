@@ -4,10 +4,10 @@ include () {
     [[ -f "$1" ]] && source "$1"
 }
 
-include ~/.zsh/alias.zsh
-include ~/.zsh/env.zsh
-include ~/.zsh/zsh_opts.zsh
-include ~/.local.zsh
+include $HOME/.zsh/alias.zsh
+include $HOME/.zsh/env.zsh
+include $HOME/.zsh/zsh_opts.zsh
+include $HOME/.local.zsh
 
 #zsh needs to update emacs' default directory
 if [ -n "$INSIDE_EMACS" ]; then

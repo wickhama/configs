@@ -23,7 +23,7 @@
 ;startup programs
 (defvar startup-programs '())
 (map nil 'run-shell-command startup-programs)
-(defvar startup-programs '("redshift" "gnome-screensaver" "dropbox"))
+(defvar startup-programs '("redshift" "gnome-screensaver" "dropbox start"))
 
 ; mode line
 (defun get_battery ()
@@ -31,13 +31,14 @@
 
 (defun get_dropbox_status ()
   (if (string/= ""
-                (run-shell-command "dropbox-cli status | grep \"Up to date\"" t))
-      "✔"
-      "✗"))
+                (run-shell-command "dropbox status | grep \"Up to date\"" t))
+      ""
+      "Dropbox is not synced"))
+
 (defun get_network ()
   (let ((nwstr (run-shell-command "nmcli | grep -Po '(?!docker)(?<=connected to ).+' | tr -d '\\n'" t)))
     (if (string= "" nwstr)
-	      "Not Connected"
+	      ""
 	      (if (search "Wired" nwstr)
             "Wired"
             nwstr))))

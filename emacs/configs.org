@@ -146,6 +146,14 @@ Enable smartparens strict mode in lisp modes
       (lambda ()
         (interactive)
         (evil-hybrid-state)))
+    (evil-define-key 'normal term-mode-map "a"
+      (lambda ()
+        (interactive)
+        (evil-hybrid-state)))
+    (evil-define-key 'normal term-raw-map "a"
+      (lambda ()
+        (interactive)
+        (evil-hybrid-state)))
     (evil-define-key 'emacs term-raw-map "<escape>"
       (lambda ()
         (interactive)
@@ -188,7 +196,7 @@ terminal hydra
   (add-to-list 'evil-hybrid-state-modes 'term-mode)
 #+END_SRC
 * Spacemacs
-** TODO keybinds
+** keybinds
 #+BEGIN_SRC emacs-lisp
   (spacemacs/set-leader-keys 
                                           ;applications
@@ -199,6 +207,7 @@ terminal hydra
                                           ;files
     "fec" 'warnock/find-conffile
     "fn" 'warnock/open-org
+    "SPC" 'helm-M-x
     )
 #+END_SRC
 
